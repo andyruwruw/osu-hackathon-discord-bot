@@ -4,6 +4,7 @@ import {
   ClientOptions,
   GuildMember,
   Interaction,
+  Message,
   MessageReaction,
   PartialGuildMember,
   PartialMessageReaction,
@@ -49,9 +50,13 @@ export class DiscordBot extends DiscordClient {
     this.on('ready', () => this._handleReady());
     this.on('error', (error: Error) => this._handleError(error));
     this.on('interactionCreate', (interaction: Interaction) => this._handleInteraction(interaction));
+    this.on('messageCreate', (message: Message) => this._handlemessageCreate(message));
     this.on('guildMemberAdd', (member: GuildMember) => this._handleGuildMemberAdded(member));
     this.on('guildMemberRemove', (member: GuildMember | PartialGuildMember) => this._handleGuildMemberRemove(member));
-    this.on('messageReactionAdd', (messageReaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) => this._handleMessageReactionAdd(messageReaction, user));
+    this.on('messageReactionAdd', (
+      messageReaction: MessageReaction | PartialMessageReaction,
+      user: User | PartialUser,
+    ) => this._handleMessageReactionAdd(messageReaction, user));
     this.on('roleCreate', (role: Role) => this._handleRoleCreate(role));
 
     this._connectToDatabase();
@@ -98,6 +103,14 @@ export class DiscordBot extends DiscordClient {
    * Handles the Discord interaction event.
    */
   _handleInteraction(interaction: Interaction): void {
+  }
+
+  /**
+   * Handles the Discord message event.
+   *
+   * @param {Message} message Message created.
+   */
+  _handlemessageCreate(message: Message): void {
   }
 
   /**

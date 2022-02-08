@@ -32,6 +32,11 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  prizeIds: {
+    type: Array,
+    of: String,
+    default: [],
+  },
 });
 
 export const HackathonModel = mongoose.model('Hackathon', schema);
