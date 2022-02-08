@@ -17,12 +17,6 @@ This bot was specifically built for Oregon State Hackathon Club's Discord server
 
 # Commands
 
-- `/beaverhacks nexthackathon`: Details on the next hackathon.
-- `/beaverhacks lvl`: See your engagement level.
-- `/beaverhacks list`: List available commands.
-- `/beaverhacks ranks`: Available ranks.
-- `/beaverhacks userinfo [User]`: See info on user.
-
 # Usage
 
 Install dependencies:
@@ -31,9 +25,7 @@ Install dependencies:
 $ npm install
 ```
 
-You'll need to create a file named `.env` in the root directory. This file is automatically ignored by git and is safe for secrets.
-
-There's an `example.env` to help you know what properties you'll need. For specific values, contact *Andrew Young*.
+You'll need to create a file named `.env` in the root directory. This file is automatically ignored by git. There's an `example.env` to help you know what properties you'll need. For specific values, contact *Andrew Young*.
 
 ```
 # Discord Registration
@@ -43,6 +35,11 @@ DISCORD_BOT_TOKEN=
 DATABASE_URL=
 DATABASE_USER=
 DATABASE_PASSWORD=
+
+# Enable or disable message types
+DEBUG=1
+WARNING=1
+UPDATE=1
 ```
 
 Start the bot with the following command:
@@ -51,18 +48,17 @@ Start the bot with the following command:
 $ npm run start
 ```
 
-`npm run start` automatically builds the server from typescript to javascript in a `dist` folder it will create, and then runs the bot.
+`npm run start` automatically builds the server from typescript to javascript and runs it using `nodemon`, which will restart the server if any changes are saved.
 
-To build the scripts without running the bot use:
-
-```
-$ npm run build
-```
-
-To delete an old build (in `dist`):
+It's best to keep up with linting to ensure the code stays clean. You can run:
 
 ```
-$ npm run clean
+$ npm run lint
+
+or
+
+$ npm run lint:fix
 ```
 
-The script will automatically reload when changes are made. This means if you want to make changes while the bot is running: save your changes, run `npm run build` in a separate terminal tab, and the running process will restart.
+This will show you all the linting errors to be fixed. All pull requests and pushes to main will be checked for linting and tests by Github as well.
+
