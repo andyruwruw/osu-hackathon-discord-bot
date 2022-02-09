@@ -1,5 +1,5 @@
 /**
- * Database URL Not Set Error.
+ * Error thrown when Database URL is missing.
  */
 export class DatabaseUrlMissingError extends Error {
   constructor() {

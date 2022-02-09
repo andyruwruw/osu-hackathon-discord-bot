@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
+  name: {
     type: String,
     default: 'Unnamed',
   },
@@ -39,8 +39,8 @@ const schema = new mongoose.Schema({
     default: '#',
   },
   prizeId: {
-    type: String,
-    default: '',
+    type: String || null,
+    default: null,
   },
 });
 
