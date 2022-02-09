@@ -46,7 +46,14 @@ export class DiscordBot extends DiscordClient {
 
     this._database = getDatabase();
 
-    // Discord Events
+    this._setEventHandlers();
+    this._connectToDatabase();
+  }
+
+  /**
+   * Sets event handlers for the Discord bot.
+   */
+  _setEventHandlers(): void {
     this.on('ready', () => this._handleReady());
     this.on('error', (error: Error) => this._handleError(error));
     this.on('interactionCreate', (interaction: Interaction) => this._handleInteraction(interaction));
@@ -58,8 +65,6 @@ export class DiscordBot extends DiscordClient {
       user: User | PartialUser,
     ) => this._handleMessageReactionAdd(messageReaction, user));
     this.on('roleCreate', (role: Role) => this._handleRoleCreate(role));
-
-    this._connectToDatabase();
   }
 
   /**
@@ -95,6 +100,8 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord error event.
+   * 
+   * @param {Error} error Error that occurred.
    */
   _handleError(error: Error): void {
     console.log(error);
@@ -102,6 +109,8 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord interaction event.
+   * 
+   * @param {Interaction} interaction Interaction created.
    */
   _handleInteraction(interaction: Interaction): void {
     console.log(interaction);
@@ -118,6 +127,8 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord guild member added event.
+   * 
+   * @param {GuildMember} member Member who was added.
    */
   _handleGuildMemberAdded(member: GuildMember): void {
     console.log(member);
@@ -125,6 +136,8 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord guild member removed event.
+   * 
+   * @param {GuildMember | PartialGuildMember} member Member who was removed.
    */
   _handleGuildMemberRemove(member: GuildMember | PartialGuildMember): void {
     console.log(member);
@@ -132,6 +145,9 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord message reaction event.
+   * 
+   * @param {MessageReaction | PartialMessageReaction} messageReaction Message reaction.
+   * @param {User | PartialUser} user User who reacted.
    */
   _handleMessageReactionAdd(
     messageReaction: MessageReaction | PartialMessageReaction,
@@ -142,6 +158,8 @@ export class DiscordBot extends DiscordClient {
 
   /**
    * Handles the Discord role created event.
+   * 
+   * @param {Role} role Role created.
    */
   _handleRoleCreate(role: Role): void {
     console.log(role);
