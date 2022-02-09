@@ -1,5 +1,5 @@
 /**
- * Abstract Database Class Used Error.
+ * Error thrown when abstract Database is used.
  */
 export class GenericDatabaseUsedError extends Error {
   constructor() {

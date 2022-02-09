@@ -10,17 +10,17 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
+  name: {
+    type: String,
+    default: '',
+  },
+  description: {
     type: String,
     default: '',
   },
   index: {
     type: Number,
     default: 0,
-  },
-  description: {
-    type: String,
-    default: '',
   },
 });
 
