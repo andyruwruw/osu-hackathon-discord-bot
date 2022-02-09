@@ -199,13 +199,13 @@ export interface IRole extends INameableGuildItem {
 /**
  * Types of data in the database.
  */
-type DatabaseColumnTypes = string | number | boolean | Date | string[] | number[];
+export type DatabaseColumnTypes = string | number | boolean | Date | string[] | number[];
 
 /**
  * Filter object used to limit queries.
  */
 export interface IQueryFilter {
-  [key: string]: DatabaseColumnTypes | Record<string, DatabaseColumnTypes>;
+  [key: string]: DatabaseColumnTypes | DatabaseColumnTypes[] | Record<string, DatabaseColumnTypes | DatabaseColumnTypes[]>;
 }
 
 /**
@@ -218,4 +218,31 @@ export type IQueryProjection = Record<string, number> | string | string[];
  */
 export interface IUpdateQuery {
   [key: string]: DatabaseColumnTypes | Record<string, DatabaseColumnTypes>;
+}
+
+export interface IDataAccessObject<T> {
+  create: (...args: any[]) => Promise<T>;
+
+  find: (
+    filter?: IQueryFilter,
+    projection?: IQueryProjection,
+  ) => Promise<T[]>;
+
+  findById: (id: string) => Promise<T | null>;
+
+  delete: (filter?: IQueryFilter) => Promise<number>;
+
+  deleteById: (id: string) => Promise<boolean>;
+
+  updateOne: (
+    filter?: IQueryFilter,
+    update?: IUpdateQuery,
+    insertNew?: boolean,
+  ) => Promise<boolean>
+
+  updateMany: (
+    filter?: IQueryFilter,
+    update?: IUpdateQuery,
+    insertNew?: boolean,
+  ) => Promise<number>;
 }

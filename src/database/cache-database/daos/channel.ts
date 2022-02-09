@@ -1,9 +1,5 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { ChannelModel } from '../models';
 
 // Types
 import {
@@ -46,12 +42,5 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
       isAdminCommandChannel,
       isErrorLog,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return ChannelModel;
   }
 }

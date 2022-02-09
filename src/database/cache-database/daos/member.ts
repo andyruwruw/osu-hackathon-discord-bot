@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { MemberModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IMember,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -18,7 +14,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
   /**
    * Instantiates a new Member DataAccessObject.
    */
-   constructor() {
+  constructor() {
     super();
   }
 
@@ -33,7 +29,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
    * @param {number} xp Member's XP to the next level.
    * @returns {IMember} The member created.
    */
-  async create(
+   async create(
     id: string,
     guildId: string,
     name: string,
@@ -49,12 +45,5 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
       level,
       xp,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return MemberModel;
   }
 }

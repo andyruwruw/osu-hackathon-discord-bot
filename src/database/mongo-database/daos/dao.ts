@@ -104,8 +104,8 @@ export class DataAccessObject<T> {
    * @returns {Promise<boolean>} Whether the item was updated.
    */
    async updateOne(
-    filter: IQueryFilter,
-    update: IUpdateQuery,
+    filter: IQueryFilter = {},
+    update: IUpdateQuery = {},
     insertNew: boolean = true,
   ): Promise<boolean> {
     const { modifiedCount } = await this._model.updateOne(
@@ -128,8 +128,8 @@ export class DataAccessObject<T> {
    * @returns {Promise<number>} The number of documents updated.
    */
   async updateMany(
-    filter: IQueryFilter,
-    update: IUpdateQuery,
+    filter: IQueryFilter = {},
+    update: IUpdateQuery = {},
     insertNew: boolean = true,
   ): Promise<number> {
     const { modifiedCount } = await this._model.updateMany(

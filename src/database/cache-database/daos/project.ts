@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { ProjectModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IProject,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -29,7 +25,7 @@ export class Project extends DataAccessObject<IProject> implements IDataAccessOb
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IProject} The Project created.
    */
-  async create(
+   async create(
     id: string,
     guildId: string,
     hackathonId: string,
@@ -53,12 +49,5 @@ export class Project extends DataAccessObject<IProject> implements IDataAccessOb
       demoUrl,
       prizeId,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return ProjectModel;
   }
 }

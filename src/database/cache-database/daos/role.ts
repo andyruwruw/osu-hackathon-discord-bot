@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { RoleModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IRole,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -18,7 +14,7 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
   /**
    * Instantiates a new Role DataAccessObject.
    */
-   constructor() {
+  constructor() {
     super();
   }
 
@@ -29,7 +25,7 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IRole} The Role created.
    */
-  async create(
+   async create(
     id: string,
     guildId: string,
     name = 'Unnamed',
@@ -63,12 +59,5 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
       isPronouns,
       pronounType,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return RoleModel;
   }
 }

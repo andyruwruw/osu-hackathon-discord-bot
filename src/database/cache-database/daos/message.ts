@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { MessageModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IMessage,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -18,7 +14,7 @@ export class Message extends DataAccessObject<IMessage> implements IDataAccessOb
   /**
    * Instantiates a new Message DataAccessObject.
    */
-   constructor() {
+  constructor() {
     super();
   }
 
@@ -29,7 +25,7 @@ export class Message extends DataAccessObject<IMessage> implements IDataAccessOb
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IMessage} The message created.
    */
-  async create(
+   async create(
     id: string,
     guildId: string,
     isRoleAssigner = false,
@@ -41,12 +37,5 @@ export class Message extends DataAccessObject<IMessage> implements IDataAccessOb
       isRoleAssigner,
       roleAssignments,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return MessageModel;
   }
 }

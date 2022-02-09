@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { PrizeModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IPrize,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -18,7 +14,7 @@ export class Prize extends DataAccessObject<IPrize> implements IDataAccessObject
   /**
    * Instantiates a new Prize DataAccessObject.
    */
-   constructor() {
+  constructor() {
     super();
   }
 
@@ -29,7 +25,7 @@ export class Prize extends DataAccessObject<IPrize> implements IDataAccessObject
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IPrize} The prize created.
    */
-  async create(
+   async create(
     id: string,
     guildId: string,
     name: 'Prize',
@@ -43,12 +39,5 @@ export class Prize extends DataAccessObject<IPrize> implements IDataAccessObject
       description,
       index,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return PrizeModel;
   }
 }

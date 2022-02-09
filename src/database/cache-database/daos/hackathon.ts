@@ -1,14 +1,10 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { HackathonModel } from '../models';
 
 // Types
 import {
-  IDataAccessObject,
   IHackathon,
+  IDataAccessObject,
 } from '../../../types';
 
 /**
@@ -18,7 +14,7 @@ export class Hackathon extends DataAccessObject<IHackathon> implements IDataAcce
   /**
    * Instantiates a new Hackathon DataAccessObject.
    */
-   constructor() {
+  constructor() {
     super();
   }
 
@@ -36,34 +32,27 @@ export class Hackathon extends DataAccessObject<IHackathon> implements IDataAcce
    * @param {string[]} [prizeIds = []] Unique identifier of the prizes in the hackathon.
    * @returns {IHackathon} The hackathon created.
    */
-  async create(
-    id: string,
-    guildId: string,
-    name = 'Unnamed',
-    theme = 'TBA',
-    start = new Date(0),
-    end = new Date(0),
-    participants = -1,
-    prizePool = -1,
-    prizeIds = [] as string[],
-  ): Promise<IHackathon> {
-    return await this._create({
-      id,
-      guildId,
-      name,
-      theme,
-      start,
-      end,
-      participants,
-      prizePool,
-      prizeIds,
-    });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return HackathonModel;
-  }
+     async create(
+      id: string,
+      guildId: string,
+      name = 'Unnamed',
+      theme = 'TBA',
+      start = new Date(0),
+      end = new Date(0),
+      participants = -1,
+      prizePool = -1,
+      prizeIds = [] as string[],
+    ): Promise<IHackathon> {
+      return await this._create({
+        id,
+        guildId,
+        name,
+        theme,
+        start,
+        end,
+        participants,
+        prizePool,
+        prizeIds,
+      });
+    }
 }
