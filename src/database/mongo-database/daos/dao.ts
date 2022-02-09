@@ -1,5 +1,5 @@
 // Packages
-import { Model, Query } from 'mongoose';
+import { Model } from 'mongoose';
 
 // Local Imports
 import { GenericDaoUsedError } from '../../../errors';
@@ -8,6 +8,7 @@ import { GenericDaoUsedError } from '../../../errors';
 import {
   IQueryFilter,
   IQueryProjection,
+  IUpdateQuery,
 } from '../../../types';
 
 /**
@@ -92,6 +93,54 @@ export class DataAccessObject<T> {
     } = await this._model.deleteOne({ _id: id });
 
     return deletedCount === 1;
+  }
+
+  /**
+   * Updates one item in the Database matching the filter.
+   *
+   * @param {IQueryFilter} filter 
+   * @param {IUpdateQuery} update 
+   * @param {boolean} insertNew 
+   * @returns {Promise<boolean>} Whether the item was updated.
+   */
+   async updateOne(
+    filter: IQueryFilter,
+    update: IUpdateQuery,
+    insertNew: boolean = true,
+  ): Promise<boolean> {
+    const { modifiedCount } = await this._model.updateOne(
+      filter,
+      update,
+      {
+        upsert: insertNew,
+      },
+    );
+
+    return modifiedCount > 0;
+  }
+
+  /**
+   * Updates all items in the Database matching the filter.
+   *
+   * @param {IQueryFilter} filter 
+   * @param {IUpdateQuery} update 
+   * @param {boolean} insertNew 
+   * @returns {Promise<number>} The number of documents updated.
+   */
+  async updateMany(
+    filter: IQueryFilter,
+    update: IUpdateQuery,
+    insertNew: boolean = true,
+  ): Promise<number> {
+    const { modifiedCount } = await this._model.updateMany(
+      filter,
+      update,
+      {
+        upsert: insertNew,
+      },
+    );
+
+    return modifiedCount;
   }
 
   /**

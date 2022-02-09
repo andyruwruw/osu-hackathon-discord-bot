@@ -212,3 +212,10 @@ export interface IQueryFilter {
  * Projection on queries to limit columns.
  */
 export type IQueryProjection = Record<string, number> | string | string[];
+
+/**
+ * Update object used to update data in the database.
+ */
+export interface IUpdateQuery {
+  [key: string]: DatabaseColumnTypes | Record<string, DatabaseColumnTypes>;
+}
