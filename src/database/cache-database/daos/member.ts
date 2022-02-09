@@ -12,13 +12,6 @@ import {
  */
 export class Member extends DataAccessObject<IMember> implements IDataAccessObject<IMember> {
   /**
-   * Instantiates a new Member DataAccessObject.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Creates a Member in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
@@ -29,7 +22,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
    * @param {number} xp Member's XP to the next level.
    * @returns {IMember} The member created.
    */
-   async create(
+  async create(
     id: string,
     guildId: string,
     name: string,
@@ -37,7 +30,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
     level: number = 0,
     xp: number = 0,
   ): Promise<IMember> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       name,

@@ -12,20 +12,13 @@ import {
  */
 export class Project extends DataAccessObject<IProject> implements IDataAccessObject<IProject> {
   /**
-   * Instantiates a new Project DataAccessObject.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Creates a Project in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IProject} The Project created.
    */
-   async create(
+  async create(
     id: string,
     guildId: string,
     hackathonId: string,
@@ -37,7 +30,7 @@ export class Project extends DataAccessObject<IProject> implements IDataAccessOb
     demoUrl: string = '#',
     prizeId: string | null = null,
   ): Promise<IProject> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       name, 

@@ -51,7 +51,7 @@ export class DataAccessObject<T> {
   async find(
     filter: IQueryFilter = {},
     projection: IQueryProjection = ''): Promise<T[]> {
-    return await this._model.find(
+    return this._model.find(
       filter,
       projection,
     );
@@ -64,7 +64,7 @@ export class DataAccessObject<T> {
    * @returns {Promise<T | null>} The item or null if not found.
    */
   async findById(id: string): Promise<T | null> {
-    return await this._model.findById(id);
+    return this._model.findById(id);
   }
 
   /**
@@ -103,7 +103,7 @@ export class DataAccessObject<T> {
    * @param {boolean} insertNew 
    * @returns {Promise<boolean>} Whether the item was updated.
    */
-   async updateOne(
+  async updateOne(
     filter: IQueryFilter = {},
     update: IUpdateQuery = {},
     insertNew: boolean = true,

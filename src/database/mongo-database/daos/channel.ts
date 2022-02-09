@@ -16,13 +16,6 @@ import {
  */
 export class Channel extends DataAccessObject<IChannel> implements IDataAccessObject<IChannel> {
   /**
-   * Instantiates a new Channel DataAccessObject.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Creates a Channel in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
@@ -39,7 +32,7 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
     isAdminCommandChannel = false,
     isErrorLog = false,
   ): Promise<IChannel> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       isCommandChannel,

@@ -12,13 +12,6 @@ import {
  */
 export class Hackathon extends DataAccessObject<IHackathon> implements IDataAccessObject<IHackathon> {
   /**
-   * Instantiates a new Hackathon DataAccessObject.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Creates a Hackathon in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
@@ -32,27 +25,27 @@ export class Hackathon extends DataAccessObject<IHackathon> implements IDataAcce
    * @param {string[]} [prizeIds = []] Unique identifier of the prizes in the hackathon.
    * @returns {IHackathon} The hackathon created.
    */
-     async create(
-      id: string,
-      guildId: string,
-      name = 'Unnamed',
-      theme = 'TBA',
-      start = new Date(0),
-      end = new Date(0),
-      participants = -1,
-      prizePool = -1,
-      prizeIds = [] as string[],
-    ): Promise<IHackathon> {
-      return await this._create({
-        id,
-        guildId,
-        name,
-        theme,
-        start,
-        end,
-        participants,
-        prizePool,
-        prizeIds,
-      });
-    }
+  async create(
+    id: string,
+    guildId: string,
+    name = 'Unnamed',
+    theme = 'TBA',
+    start = new Date(0),
+    end = new Date(0),
+    participants = -1,
+    prizePool = -1,
+    prizeIds = [] as string[],
+  ): Promise<IHackathon> {
+    return this._create({
+      id,
+      guildId,
+      name,
+      theme,
+      start,
+      end,
+      participants,
+      prizePool,
+      prizeIds,
+    });
+  }
 }

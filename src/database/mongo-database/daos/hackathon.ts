@@ -16,13 +16,6 @@ import {
  */
 export class Hackathon extends DataAccessObject<IHackathon> implements IDataAccessObject<IHackathon> {
   /**
-   * Instantiates a new Hackathon DataAccessObject.
-   */
-   constructor() {
-    super();
-  }
-
-  /**
    * Creates a Hackathon in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
@@ -47,7 +40,7 @@ export class Hackathon extends DataAccessObject<IHackathon> implements IDataAcce
     prizePool = -1,
     prizeIds = [] as string[],
   ): Promise<IHackathon> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       name,

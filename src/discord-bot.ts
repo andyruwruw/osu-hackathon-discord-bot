@@ -97,12 +97,14 @@ export class DiscordBot extends DiscordClient {
    * Handles the Discord error event.
    */
   _handleError(error: Error): void {
+    console.log(error);
   }
 
   /**
    * Handles the Discord interaction event.
    */
   _handleInteraction(interaction: Interaction): void {
+    console.log(interaction);
   }
 
   /**
@@ -111,18 +113,21 @@ export class DiscordBot extends DiscordClient {
    * @param {Message} message Message created.
    */
   _handlemessageCreate(message: Message): void {
+    console.log(message);
   }
 
   /**
    * Handles the Discord guild member added event.
    */
   _handleGuildMemberAdded(member: GuildMember): void {
+    console.log(member);
   }
 
   /**
    * Handles the Discord guild member removed event.
    */
   _handleGuildMemberRemove(member: GuildMember | PartialGuildMember): void {
+    console.log(member);
   }
 
   /**
@@ -132,12 +137,14 @@ export class DiscordBot extends DiscordClient {
     messageReaction: MessageReaction | PartialMessageReaction,
     user: User | PartialUser,
   ): void {
+    console.log(messageReaction, user);
   }
 
   /**
    * Handles the Discord role created event.
    */
   _handleRoleCreate(role: Role): void {
+    console.log(role);
   }
 
   /**

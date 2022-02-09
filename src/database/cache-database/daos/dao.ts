@@ -38,7 +38,7 @@ export class DataAccessObject<T> {
    * @param {IQueryProjection} projection The projection to apply to the query.
    * @returns {Promise<T[]>} The items.
    */
-   async find(
+  async find(
     filter: IQueryFilter = {},
     projection: IQueryProjection = ''): Promise<T[]> {
     const items = this._findFilterItems(filter);
@@ -110,7 +110,7 @@ export class DataAccessObject<T> {
    * @param {boolean} insertNew 
    * @returns {Promise<boolean>} Whether the item was updated.
    */
-   async updateOne(
+  async updateOne(
     filter: IQueryFilter = {},
     update: IUpdateQuery = {},
     insertNew: boolean = true,
@@ -144,7 +144,7 @@ export class DataAccessObject<T> {
         return true;
       }
     }
-    return false
+    return false;
   }
 
   /**
@@ -287,7 +287,7 @@ export class DataAccessObject<T> {
    */
   _applyProjection(
     items: T[],
-    projection: IQueryProjection
+    projection: IQueryProjection,
   ): Record<string, DatabaseColumnTypes>[] {
     const projectedItems = [] as Record<string, DatabaseColumnTypes>[];
     const fields = Object.keys(projection);

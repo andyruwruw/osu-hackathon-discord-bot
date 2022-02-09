@@ -16,13 +16,6 @@ import {
  */
 export class Prize extends DataAccessObject<IPrize> implements IDataAccessObject<IPrize> {
   /**
-   * Instantiates a new Prize DataAccessObject.
-   */
-   constructor() {
-    super();
-  }
-
-  /**
    * Creates a Prize in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
@@ -36,7 +29,7 @@ export class Prize extends DataAccessObject<IPrize> implements IDataAccessObject
     description = '',
     index = 0,
   ): Promise<IPrize> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       name, 

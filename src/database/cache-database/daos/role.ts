@@ -12,20 +12,13 @@ import {
  */
 export class Role extends DataAccessObject<IRole> implements IDataAccessObject<IRole> {
   /**
-   * Instantiates a new Role DataAccessObject.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Creates a Role in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guildId Unique identifier for the Discord server.
    * @returns {IRole} The Role created.
    */
-   async create(
+  async create(
     id: string,
     guildId: string,
     name = 'Unnamed',
@@ -42,7 +35,7 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
     isPronouns = false,
     pronounType = 'Ask',
   ): Promise<IRole> {
-    return await this._create({
+    return this._create({
       id,
       guildId,
       name,
