@@ -1,5 +1,8 @@
 // Packages
-import mongoose from 'mongoose';
+import {
+  connect,
+  connection,
+} from 'mongoose';
 
 // Local Imports
 import {
@@ -91,7 +94,7 @@ export class MongoDatabase extends Database {
         '<password>',
         Environment.getDatabasePassword(),
       );
-    await mongoose.connect(authorizedUrl);
+    await connect(authorizedUrl);
 
     Monitor.log(
       MongoDatabase,
@@ -106,6 +109,6 @@ export class MongoDatabase extends Database {
    * @returns {boolean} Whether the class is connected to the database.
    */
   isConnected(): boolean {
-    return mongoose.connection.readyState === 1;
+    return connection.readyState === 1;
   }
 }

@@ -76,7 +76,7 @@ export class CacheDatabase extends Database {
     Monitor.log(
       CacheDatabase,
       MESSAGE_DATABASE_CACHE_CONNECTION_SUCCESS,
-      MonitorLayer.UPDATE,
+      MonitorLayer.WARNING,
     );
   }
 

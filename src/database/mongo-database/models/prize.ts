@@ -1,7 +1,10 @@
 // Packages
-import mongoose from 'mongoose';
+import {
+  model,
+  Schema,
+} from 'mongoose';
 
-const schema = new mongoose.Schema({
+const schema = new Schema({
   id: {
     type: String,
     required: true,
@@ -24,4 +27,4 @@ const schema = new mongoose.Schema({
   },
 });
 
-export const PrizeModel = mongoose.model('Prize', schema);
+export const PrizeModel = model('Prize', schema);

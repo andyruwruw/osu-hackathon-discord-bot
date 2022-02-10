@@ -8,7 +8,7 @@ const RESET = '\x1b[0m';
  */
 export const MonitorLayerNameFormat: Record<string, string> = {
   '0': '\x1b[90m', // DEBUG
-  '1': '\x1b[31m', // WARNING
+  '1': '\x1b[91m', // WARNING
   '2': '\x1b[33m', // UPDATE
 };
  

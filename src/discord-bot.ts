@@ -108,11 +108,15 @@ export class DiscordBot extends DiscordClient {
   }
 
   /**
-   * Handles the Discord interaction event.
+   * Handles the Discord interaction event, which includes commands.
    * 
    * @param {Interaction} interaction Interaction created.
    */
   _handleInteraction(interaction: Interaction): void {
+    if (!interaction.isCommand()) {
+      return;
+    }
+
     console.log(interaction);
   }
 
