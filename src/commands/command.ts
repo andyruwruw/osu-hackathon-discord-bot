@@ -14,6 +14,11 @@ export class Command {
   _name: string;
 
   /**
+   * Command key used to reference the command.
+   */
+  _key: string;
+
+  /**
    * Description of the Command.
    */
   _description: string;
@@ -23,9 +28,10 @@ export class Command {
    * Chat input: 1,
    * User: 2,
    * Message: 3,
+   * Hidden: 4,
    * See https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types
    */
-  _type?: number;
+  _type: number;
 
   /**
    * Whether the Command is restricted.
@@ -54,13 +60,15 @@ export class Command {
    */
   constructor(
     name: string,
+    key: string,
     description: string,
-    type?: number,
+    type: number,
     restricted: boolean = false,
     options: ApplicationCommandOptionData[] = [],
     subCommands: Command[] = [],
   ) {
     this._name = name;
+    this._key = key;
     this._description = description;
     this._type = type;
     this._restricted = restricted;
@@ -73,7 +81,7 @@ export class Command {
    *
    * @returns {ApplicationCommandData} Discord accepted object for command.
    */
-  create(): ApplicationCommandData {
+  createRegistration(): ApplicationCommandData {
     return {
       name: this._name,
       description: this._description,
@@ -81,23 +89,23 @@ export class Command {
       defaultPermission: !this._restricted,
       options: [
         ...this._options,
-        ...this._subCommands.map((command) => command.create()) as ApplicationCommandOptionData[],
+        ...this._subCommands.map((command) => command.createRegistration()) as ApplicationCommandOptionData[],
       ],
     };
   }
 
   /**
-   * Finds a subcommand by name.
+   * Finds a subcommand by key.
    *
-   * @param {string} name Name of the subcommand.
+   * @param {string} key Key of the subcommand.
    * @returns {Command | null} Subcommand if found, null otherwise.
    */
-  getSubCommand(name: string): Command | null {
+  getSubCommand(key: string): Command | null {
     if (this._subCommands.length === 0) {
       return null;
     }
 
-    const index = this._subCommands.findIndex(command => command.getName() === name);
+    const index = this._subCommands.findIndex(command => command.getKey() === key);
 
     if (index !== -1) {
       return this._subCommands[index];
@@ -106,11 +114,20 @@ export class Command {
   }
 
   /**
-   * Retrieves the Command's name.
+   * Retrieves the Command's key.
    *
-   * @returns {string} Name of the Command.
+   * @returns {string} Key of the Command.
    */
-  getName() {
-    return this._name;
+  getKey() {
+    return this._key;
+  }
+
+  /**
+   * Retrieves the Command's type.
+   *
+   * @returns {string} Type of the Command.
+   */
+  getType() {
+    return this._type;
   }
 }

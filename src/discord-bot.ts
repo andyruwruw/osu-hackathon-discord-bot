@@ -13,11 +13,7 @@ import {
   User,
 } from 'discord.js';
 
-// local Imports
-import {
-  Database,
-  getDatabase,
-} from './database';
+// Local Imports
 import {
   Monitor,
   MonitorLayer,
@@ -26,16 +22,13 @@ import {
   MESSAGE_DATABASE_CONNECTION_SUCCESS,
   MESSAGE_READY,
 } from './config/messages';
+import { Database } from './database';
+import { CommandManager } from './commands';
 
 /**
  * Discord Bot extends discord.js Client.
  */
 export class DiscordBot extends DiscordClient {
-  /**
-   * Database connection instance.
-   */
-  _database: Database;
-
   /**
    * Instantiates a new Discord bot.
    *
@@ -43,8 +36,6 @@ export class DiscordBot extends DiscordClient {
    */
   constructor(options: ClientOptions) {
     super(options);
-
-    this._database = getDatabase();
 
     this._setEventHandlers();
     this._connectToDatabase();
@@ -72,10 +63,10 @@ export class DiscordBot extends DiscordClient {
    */
   async _connectToDatabase(): Promise<void> {
     // Connect via Database instance.
-    await this._database.connect();
+    await Database.connect();
 
     // If connection was successful, log success.
-    if (await this._database.isConnected()) {
+    if (await Database.isConnected()) {
       Monitor.log(
         DiscordBot,
         MESSAGE_DATABASE_CONNECTION_SUCCESS,
@@ -95,7 +86,7 @@ export class DiscordBot extends DiscordClient {
     );
 
     // Register slash commands.
-    this._registerCommands();
+    CommandManager.registerCommands();
   }
 
   /**
@@ -167,11 +158,5 @@ export class DiscordBot extends DiscordClient {
    */
   _handleRoleCreate(role: Role): void {
     console.log(role);
-  }
-
-  /**
-   * Registers slash commands with Discord.
-   */
-  _registerCommands(): void {
   }
 }
