@@ -86,7 +86,7 @@ export class DiscordBot extends DiscordClient {
     );
 
     // Register slash commands.
-    CommandManager.registerCommands();
+    CommandManager.registerCommands(this);
   }
 
   /**
@@ -108,7 +108,7 @@ export class DiscordBot extends DiscordClient {
       return;
     }
 
-    console.log(interaction);
+    CommandManager.handleInteraction(interaction);
   }
 
   /**
@@ -117,7 +117,7 @@ export class DiscordBot extends DiscordClient {
    * @param {Message} message Message created.
    */
   _handlemessageCreate(message: Message): void {
-    console.log(message);
+    CommandManager.handleMessage(message);
   }
 
   /**

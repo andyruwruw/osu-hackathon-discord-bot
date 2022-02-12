@@ -10,7 +10,7 @@ import { Environment } from '../helpers/environment';
  *
  * @returns {Database} The database.
  */
- export const getDatabase = (): DatabaseClass => {
+export const getDatabase = (): DatabaseClass => {
   if (Environment.getDatabaseType() === DATABASE_TYPES.MONGO) {
     return new MongoDatabase();
   }

@@ -11,4 +11,9 @@ export const MESSAGE_DATABASE_CACHE_CONNECTION_SUCCESS = 'Connected to cache dat
 /**
  * Response to the ready event.
  */
-export const MESSAGE_READY: string = 'Discord bot up and running!';
+export const MESSAGE_READY = 'Discord bot up and running!';
+
+/**
+ * Response to the ready event.
+ */
+export const MESSAGE_COMMANDS_REGISTERED = 'Registered commands with Discord and all Guilds.';
