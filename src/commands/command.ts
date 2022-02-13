@@ -47,14 +47,20 @@ export class Command {
    * Subcommands of the Command.
    */
   _subCommands: Command[];
+  
+  /**
+   * Whether the command is an officer only command.
+   */
+  _isOfficerCommand: boolean;
 
   /**
    * Instantiates a new Command.
    *
    * @param {string} name Name of the Command.
+   * @param {string} key Key of the Command.
    * @param {string} description Description of the Command.
    * @param {number} type Type of Command. 
-   * @param {boolean} restricted Whether the Command is restricted.
+   * @param {boolean} isOfficerCommand Whether the command is an officer only command.
    * @param {ApplicationCommandOptionData[]} options Additional Command options.
    * @param {Command[]} subCommands Subcommands of the Command.
    */
@@ -83,7 +89,7 @@ export class Command {
    */
   createRegistration(): ApplicationCommandData {
     return {
-      name: this._name,
+      name: typeof(this._key) === 'string' ? this._key : this._key[0],
       description: this._description,
       type: this._type,
       defaultPermission: !this._restricted,
@@ -105,7 +111,14 @@ export class Command {
       return null;
     }
 
-    const index = this._subCommands.findIndex(command => command.getKey() === key);
+    const index = this._subCommands.findIndex(command => {
+      const keys = command.getKey();
+
+      if (typeof(keys) === 'string') {
+        return keys === key;
+      }
+      return keys[0] === key;
+    });
 
     if (index !== -1) {
       return this._subCommands[index];
@@ -118,16 +131,34 @@ export class Command {
    *
    * @returns {string} Key of the Command.
    */
-  getKey() {
+  getKey(): string {
     return this._key;
+  }
+
+  /**
+   * Retrieves the description of the command.
+   *
+   * @returns {string} Description of the command.
+   */
+  getDescription(): string {
+    return this._description;
   }
 
   /**
    * Retrieves the Command's type.
    *
-   * @returns {string} Type of the Command.
+   * @returns {number} Type of the Command.
    */
-  getType() {
+  getType(): number {
     return this._type;
+  }
+
+  /**
+   * Whether the Command is restricted.
+   *
+   * @returns {boolean} Whether the Command is restricted.
+   */
+  isRestricted(): boolean {
+    return !this._restricted;
   }
 }

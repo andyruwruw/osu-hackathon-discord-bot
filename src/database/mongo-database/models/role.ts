@@ -21,49 +21,9 @@ const schema = new Schema({
     type: String,
     default: '#FFFFFF',
   },
-  isOfficer: {
-    type: Boolean,
-    default: false,
-  },
-  isPresident: {
-    type: Boolean,
-    default: false,
-  },
-  isVicePresident: {
-    type: Boolean,
-    default: false,
-  },
-  isParticipant: {
-    type: Boolean,
-    default: false,
-  },
-  participantSeasonIndex: {
-    type: Number,
-    default: 0,
-  },
-  isOverallPrizeWinner: {
-    type: Boolean,
-    default: false,
-  },
-  isNewStudentPrizeWinner: {
-    type: Boolean,
-    default: false,
-  },
-  isGradStudentAlumniPrizeWinner: {
-    type: Boolean,
-    default: false,
-  },
-  prizeIndex: {
-    type: Number,
-    default: 0,
-  },
-  isPronouns: {
-    type: Boolean,
-    default: false,
-  },
-  pronounType: {
+  type: {
     type: String,
-    default: 'Ask',
+    default: 0,
   },
 });
 

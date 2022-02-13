@@ -3,21 +3,22 @@ import { APPLICATION_COMMAND_TYPES } from '../../config';
 import { Command } from '../command';
 
 /**
- * Announces a hackathon.
+ * Sets the commands channel.
  */
-export class AnnounceHackathonCommand extends Command {
+export class SetCommandsChannel extends Command {
   /**
-   * Instantiates a new AnnounceHackathonCommand.
+   * Instantiates a new SetCommandsChannel.
    */
   constructor() {
     super(
-      'Announce Hackathon',
+      'Set General Command Channel',
       [
         'officer',
-        'hackathon',
-        'announce',
+        'channel',
+        'set',
+        'commands',
       ],
-      'Announces a hackathon.',
+      'Sets the commands channel.',
       APPLICATION_COMMAND_TYPES.HIDDEN,
       true,
     );

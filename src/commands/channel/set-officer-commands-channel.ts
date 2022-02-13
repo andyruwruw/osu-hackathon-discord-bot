@@ -3,22 +3,22 @@ import { APPLICATION_COMMAND_TYPES } from '../../config';
 import { Command } from '../command';
 
 /**
- * Sets the welcome channel.
+ * Sets the officer commands channel.
  */
-export class SetWelcomeChannel extends Command {
+export class SetOfficerCommandsChannelCommand extends Command {
   /**
-   * Instantiates a new SetWelcomeChannel.
+   * Instantiates a new SetOfficerCommandsChannelCommand.
    */
   constructor() {
     super(
-      'Set General Command Channel',
+      'Set Officer Commands Channel',
       [
         'officer',
         'channel',
         'set',
-        'welcome',
+        'officer-commands',
       ],
-      'Sets the welcome channel.',
+      'Sets the officer commands channel.',
       APPLICATION_COMMAND_TYPES.HIDDEN,
       true,
     );

@@ -28,6 +28,7 @@ export const APPLICATION_COMMAND_TYPES = {
   CHAT_INPUT: 1,
   USER: 2,
   MESSAGE: 3,
+  HIDDEN: 4,
 };
 
 /**

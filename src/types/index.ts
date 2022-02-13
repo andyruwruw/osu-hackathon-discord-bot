@@ -1,3 +1,16 @@
+// Packages
+import {
+  Client,
+  Guild,
+} from 'discord.js';
+
+/**
+ * Discord client.
+ */
+export interface IDiscordBot extends Client {
+  getGuilds: () => Promise<Record<string, Guild>>
+}
+
 /**
  * Database item with an id.
  */
@@ -182,18 +195,15 @@ export interface IProject extends IDescribableGuildItem {
  * Database representation of a Discord role.
  */
 export interface IRole extends INameableGuildItem {
+  /**
+   * Color of the role.
+   */
   color: string;
-  isOfficer: boolean;
-  isPresident: boolean;
-  isVicePresident: boolean;
-  isParticipant: boolean;
-  participantSeasonIndex: number;
-  isOverallPrizeWinner: boolean;
-  isNewStudentPrizeWinner: boolean;
-  isGradStudentAlumniPrizeWinner: boolean;
-  prizeIndex: number;
-  isPronouns: boolean;
-  pronounType: string;
+
+  /**
+   * Role's purpose, type.
+   */
+  type: string;
 }
 
 /**

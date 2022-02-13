@@ -2,6 +2,7 @@
 import {
   Client as DiscordClient,
   ClientOptions,
+  Guild,
   GuildMember,
   Interaction,
   Message,
@@ -25,10 +26,13 @@ import {
 import { Database } from './database';
 import { CommandManager } from './commands';
 
+// Types
+import { IDiscordBot } from './types';
+
 /**
  * Discord Bot extends discord.js Client.
  */
-export class DiscordBot extends DiscordClient {
+export class DiscordBot extends DiscordClient implements IDiscordBot {
   /**
    * Instantiates a new Discord bot.
    *
@@ -39,6 +43,26 @@ export class DiscordBot extends DiscordClient {
 
     this._setEventHandlers();
     this._connectToDatabase();
+  }
+
+  /**
+   * Retrives the guilds the client is apart of.
+   *
+   * @returns {Promise<Record<string, Guild>>} Commands registered.
+   */
+  async getGuilds(): Promise<Record<string, Guild>> {
+    const oAuth2GUilds = Object.values(await this.guilds.fetch());
+    const guilds = {} as Record<string, Guild>;
+
+    for (let i = 0; i < oAuth2GUilds.length; i += 1) {
+      const guild = await this.guilds.fetch({
+        guild: oAuth2GUilds[i].id,
+      });
+
+      guilds[guild.id] = guild;
+    }
+
+    return guilds;
   }
 
   /**
@@ -86,6 +110,7 @@ export class DiscordBot extends DiscordClient {
     );
 
     // Register slash commands.
+    CommandManager.instantiateCommands();
     CommandManager.registerCommands(this);
   }
 

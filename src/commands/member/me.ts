@@ -3,16 +3,17 @@ import { Command } from '../command';
 import { APPLICATION_COMMAND_TYPES } from '../../config';
 
 /**
- * Gets details on the user.
+ * Gets current user's profile.
  */
 export class MeCommand extends Command {
   /**
-   * Instantiates a new MemberCommand.
+   * Instantiates a new MeCommand.
    */
   constructor() {
     super(
+      'Get My Profile',
       'me',
-      'Get your own details.',
+      'Get your own profile.',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,
     );
   }

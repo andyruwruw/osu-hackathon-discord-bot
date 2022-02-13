@@ -16,6 +16,9 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} name Name of the role.
+   * @param {string} color Color of the role.
+   * @param {string} type Type of role.
    * @returns {IRole} The Role created.
    */
   async create(
@@ -23,34 +26,14 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
     guildId: string,
     name = 'Unnamed',
     color = '#FF8000',
-    isOfficer = false,
-    isPresident = false,
-    isVicePresident = false,
-    isParticipant = false,
-    participantSeasonIndex = 0,
-    isOverallPrizeWinner = false,
-    isNewStudentPrizeWinner = false,
-    isGradStudentAlumniPrizeWinner = false,
-    prizeIndex = 0,
-    isPronouns = false,
-    pronounType = 'Ask',
+    type = 'default',
   ): Promise<IRole> {
     return this._create({
       id,
       guildId,
       name,
       color,
-      isOfficer,
-      isPresident,
-      isVicePresident,
-      isParticipant,
-      participantSeasonIndex,
-      isOverallPrizeWinner,
-      isNewStudentPrizeWinner,
-      isGradStudentAlumniPrizeWinner,
-      prizeIndex,
-      isPronouns,
-      pronounType,
+      type,
     });
   }
 }

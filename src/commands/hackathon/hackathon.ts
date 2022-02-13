@@ -1,6 +1,6 @@
 // Local Imports
-import { Command } from '../command';
 import { APPLICATION_COMMAND_TYPES } from '../../config';
+import { Command } from '../command';
 import { HackathonSeeNextCommand } from './see-next';
 import { HackathonViewCommand } from './view';
 
@@ -21,6 +21,7 @@ export class HackathonCommand extends Command {
    */
   constructor() {
     super(
+      'Hackathon Subset',
       'hackathon',
       'View past or upcoming hackathons.',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,

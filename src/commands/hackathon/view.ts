@@ -11,6 +11,7 @@ export class HackathonViewCommand extends Command {
    */
   constructor() {
     super(
+      'View Hackathon',
       'view',
       'Get details on a previous hackathon.',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,

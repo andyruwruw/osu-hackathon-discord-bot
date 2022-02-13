@@ -3,7 +3,7 @@ import { Command } from '../command';
 import { APPLICATION_COMMAND_TYPES } from '../../config';
 
 /**
- * Gets details on a club member.
+ * Gets a club member's profile.
  */
 export class MemberCommand extends Command {
   /**
@@ -11,8 +11,9 @@ export class MemberCommand extends Command {
    */
   constructor() {
     super(
+      'Get Member Profile',
       'member',
-      'Get details on a club member.',
+      'Get a club member\'s profile',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,
     );
   }
