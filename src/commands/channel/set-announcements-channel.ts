@@ -12,14 +12,9 @@ export class SetAnnouncementsChannelCommand extends Command {
   constructor() {
     super(
       'Set Announcements Channel',
-      [
-        'officer',
-        'channel',
-        'set',
-        'officer-commands',
-      ],
+      'set-announcements',
       'Sets the announcements channel.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

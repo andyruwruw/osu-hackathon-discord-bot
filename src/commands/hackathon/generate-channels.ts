@@ -11,14 +11,10 @@ export class GenerateHackathonChannelsCommand extends Command {
    */
   constructor() {
     super(
-      'Edit Hackathon',
-      [
-        'officer',
-        'hackathon',
-        'generate-channels',
-      ],
+      'Generate Hackathon Channels',
+      'generate-channels',
       'Generates hackathon category and channels.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

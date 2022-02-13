@@ -12,14 +12,9 @@ export class SetOfficerRoleCommand extends Command {
   constructor() {
     super(
       'Set Officer Role',
-      [
-        'officer',
-        'role',
-        'set',
-        'officer',
-      ],
+      'set-officer',
       'Sets the officer role with admin permissions.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

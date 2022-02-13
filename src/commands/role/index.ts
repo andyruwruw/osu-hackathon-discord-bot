@@ -1,2 +1,2 @@
 // Local Exports
-export { SetOfficerRoleCommand } from './set-officer-role';
+export { RoleCommand } from './role';

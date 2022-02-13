@@ -12,13 +12,9 @@ export class CreateRoleAssignerCommand extends Command {
   constructor() {
     super(
       'Create a Role Assigner',
-      [
-        'officer',
-        'role-assigner',
-        'create',
-      ],
+      'role-assigner',
       ' Creates a new role assigner.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

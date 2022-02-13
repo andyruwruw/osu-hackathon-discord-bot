@@ -12,13 +12,9 @@ export class EditHackathonCommand extends Command {
   constructor() {
     super(
       'Edit Hackathon',
-      [
-        'officer',
-        'hackathon',
-        'edit',
-      ],
+      'edit',
       'Edits a hackathon.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

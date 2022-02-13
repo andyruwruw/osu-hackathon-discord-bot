@@ -47,11 +47,6 @@ export class Command {
    * Subcommands of the Command.
    */
   _subCommands: Command[];
-  
-  /**
-   * Whether the command is an officer only command.
-   */
-  _isOfficerCommand: boolean;
 
   /**
    * Instantiates a new Command.

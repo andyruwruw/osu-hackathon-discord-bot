@@ -12,13 +12,9 @@ export class AnnounceHackathonCommand extends Command {
   constructor() {
     super(
       'Announce Hackathon',
-      [
-        'officer',
-        'hackathon',
-        'announce',
-      ],
+      'announce',
       'Announces a hackathon.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }

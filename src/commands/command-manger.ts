@@ -18,25 +18,15 @@ import { APPLICATION_COMMAND_TYPES } from '../config';
 
 // Commands
 import {
-  SetAnnouncementsChannelCommand,
-  SetCommandsChannel,
-  SetOfficerCommandsChannelCommand,
-  SetWelcomeChannel,
-} from './channel';
-import {
-  AnnounceHackathonCommand,
-  CreateHackathonCommand,
-  EditHackathonCommand,
-  GenerateHackathonChannelsCommand,
-  HackathonCommand,
-} from './hackathon';
-import {
   MeCommand,
   MemberCommand,
 } from './member';
+import { ChannelCommand } from './channel';
+import { HackathonCommand } from './hackathon';
 import { HelpCommand } from './general';
 import { CreateRoleAssignerCommand } from './message';
-import { SetOfficerRoleCommand } from './role';
+import { RoleCommand } from './role';
+import { OfficerPermissions } from '../permissions';
 
 // Types
 import { IDiscordBot } from '../types';
@@ -52,17 +42,10 @@ export class CommandManager {
    */
   static instantiateCommands() {
     // Channel Commands
-    CommandManager._commands.push(new SetAnnouncementsChannelCommand());
-    CommandManager._commands.push(new SetCommandsChannel());
-    CommandManager._commands.push(new SetOfficerCommandsChannelCommand());
-    CommandManager._commands.push(new SetWelcomeChannel());
+    CommandManager._commands.push(new ChannelCommand());
     // General Commands
     CommandManager._commands.push(new HelpCommand());
     // Hackathon Commands
-    CommandManager._commands.push(new AnnounceHackathonCommand());
-    CommandManager._commands.push(new CreateHackathonCommand());
-    CommandManager._commands.push(new EditHackathonCommand());
-    CommandManager._commands.push(new GenerateHackathonChannelsCommand());
     CommandManager._commands.push(new HackathonCommand());
     // Member Commands
     CommandManager._commands.push(new MeCommand());
@@ -70,7 +53,7 @@ export class CommandManager {
     // Message Commands
     CommandManager._commands.push(new CreateRoleAssignerCommand());
     // Role Commands
-    CommandManager._commands.push(new SetOfficerRoleCommand());
+    CommandManager._commands.push(new RoleCommand());
   }
 
   /**
@@ -79,74 +62,74 @@ export class CommandManager {
    * @param {IDiscordBot} client The Discord.js client.
    */
   static async registerCommands(client: IDiscordBot): Promise<void> {
+    console.log('generating commands');
     const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
     const guilds = Object.values(client.getGuilds());
-    const guildCommands = [] as Record<string, ApplicationCommand>[]
+    const guildCommands = [] as Record<string, ApplicationCommand>[];
+
+    console.log(guilds.length);
 
     for (let i = 0; i < guilds.length; i += 1) {
+      const guild = guilds[i];
 
+      guildCommands.push(await CommandManager._getGuildRegisteredCommands(guild));
     }
 
+    console.log(CommandManager._commands.length);
+
     for (let i = 0; i < CommandManager._commands.length; i += 1) {
-      let shouldCreate = true;
+      let shouldCreateApplication = true;
       const command = CommandManager._commands[i];
+      console.log(`command ${command.getKey()}`);
 
       if (command.getKey() in applicationCommands) {
         if (CommandManager._applicationCommandMatches(
           applicationCommands[command.getKey()],
           command,
         )) {
-          shouldCreate = false;
+          shouldCreateApplication = false;
         } else {
           await client.application.commands.delete(command.getKey());
         }
       }
 
-      if (shouldCreate) {
+      if (shouldCreateApplication) {
         await client.application.commands.create(command.createRegistration());
       }
 
+      console.log(`going through guilds ${guilds.length}`);
+
       for (let j = 0; j < guilds.length; j += 1) {
         const guild = guilds[j];
-        const guildCommands = await CommandManager._getGuildRegisteredCommands(guild);
+        const commands = guildCommands[j];
 
-        for (let k = 0; k < guildCommands.length; k += 1) {
-          let shouldCreate = true;
+        let shouldCreateGuild = true;
 
-          if (command.getKey() in guildCommands) {
-            if (CommandManager._applicationCommandMatches(
-              guildCommands[command.getKey()],
-              command,
-            )) {
-              shouldCreate = false;
-            } else {
-            }
+        if (command.getKey() in commands) {
+          if (CommandManager._applicationCommandMatches(
+            commands[command.getKey()],
+            command,
+          )) {
+            shouldCreateGuild = false;
+          } else {
+            await guild.commands.delete(command.getKey());
+          }
+        }
+
+        if (shouldCreateGuild) {
+          const createdCommand = await guild.commands.create(command.createRegistration());
+
+          if (command.isRestricted()) {
+            await guild.commands.permissions.add({
+              command: createdCommand.id,
+              permissions: [
+                (new OfficerPermissions()).createPermissions(),
+              ],
+            });
           }
         }
       }
     }
-
-    //   try {
-    //     if ('application' in client) {
-    //       client.application.commands.create(command);
-    //     }
-
-    //     if ('guilds' in client) {
-    //       client.guilds.cache.forEach(async (guild) => {
-    //         try {
-    //           console.log('registering it with a guild');
-    //           await guild.commands.create(command);
-    //         } catch (error) {
-    //           console.log(command);
-    //           console.trace(error);
-    //         }
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.log(command);
-    //     console.trace(error);
-    //   }
-    // }
 
     Monitor.log(
       CommandManager,

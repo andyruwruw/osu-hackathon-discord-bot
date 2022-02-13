@@ -1,6 +1,6 @@
 // Local Imports
-import { Command } from '../command';
 import { APPLICATION_COMMAND_TYPES } from '../../config';
+import { Command } from '../command';
 
 /**
  * Retrieves details on the next hackathon.

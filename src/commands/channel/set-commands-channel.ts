@@ -12,14 +12,9 @@ export class SetCommandsChannel extends Command {
   constructor() {
     super(
       'Set General Command Channel',
-      [
-        'officer',
-        'channel',
-        'set',
-        'commands',
-      ],
+      'set-general-commands',
       'Sets the commands channel.',
-      APPLICATION_COMMAND_TYPES.HIDDEN,
+      APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       true,
     );
   }
