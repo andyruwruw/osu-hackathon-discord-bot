@@ -6,6 +6,9 @@ import {
   MutationTree,
 } from 'vuex';
 
+// Local Imports
+import api from '../../api';
+
 // Types
 import { IMember } from '../../../../shared/types';
 
@@ -88,15 +91,56 @@ const mutations: MutationTree<AuthModuleState> = {
 // Module actions
 const actions: ActionTree<AuthModuleState, any> = {
   /**
-   * Logs a user in with the website.
+   * Beings OAuth2 process with Discord.
    *
    * @param {ActionContext<NavigationState, any>} context Vuex action context.
-   * @param {Record<string, any>} payload Action payload.
-   * @param {string} payload.username User's username.
-   * @param {string} payload.password User's password.
    */
-  login(): void {
-    console.log('login');
+  async login({ dispatch }): Promise<void> {
+    const url = await api.auth.login();
+
+    if (url) {
+      location.href = url;
+    } else {
+      dispatch(
+        'goTo404',
+        null,
+        { root: true },
+      );
+    }
+  },
+
+  /**
+   * Continues OAuth2 process with Discord.
+   *
+   * @param {ActionContext<NavigationState, any>} context Vuex action context.
+   * @param {Record<string, string>} payload Payload object.
+   * @param {string} payload.code OAuth2 code.
+   * @param {string} payload.state OAuth2 state.
+   */
+  async callback({
+    commit,
+    dispatch,
+  }, {
+    code,
+    state,
+  }): Promise<void> {
+    const user = await api.auth.callback(
+      code,
+      state,
+    );
+
+    if (user) {
+      commit(
+        'setUser',
+        user,
+      );
+    } else {
+      dispatch(
+        'goTo404',
+        null,
+        { root: true },
+      );
+    }
   },
 
   /**
@@ -104,7 +148,8 @@ const actions: ActionTree<AuthModuleState, any> = {
    *
    * @param {ActionContext<NavigationState, any>} context Vuex action context.
    */
-  logout({ commit }): void {
+  async logout({ commit }): Promise<void> {
+    await api.auth.logout();
     commit('reset');
     commit(
       'shows/reset',

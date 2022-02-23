@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "allowJs": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./api/**/*",
+    "./src/**/*",
+    "./test/**/*"
+  ],
+  "references": [
+    {
+      "path": "../shared",
+      "prepend": true
+    }
+  ]
+}

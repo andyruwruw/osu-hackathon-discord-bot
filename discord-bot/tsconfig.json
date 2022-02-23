@@ -12,7 +12,13 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "server/src/**/*",
+    "./src/**/*",
     "./test/**/*"
+  ],
+  "references": [
+    {
+      "path": "../shared",
+      "prepend": true
+    }
   ]
 }

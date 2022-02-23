@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "allowJs": true,
+    "typeRoots": [
+      "../discord-bot/node_modules/@types",
+      "../server/node_modules/@types"
+    ],
+    "allowSyntheticDefaultImports": true
+  },
+  "references": []
+}

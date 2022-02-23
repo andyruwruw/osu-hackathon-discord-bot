@@ -5,12 +5,11 @@ import {
 } from '@vercel/node';
 
 // Local Imports
-import { BASE_URL } from '../src/config';
-
+import { LoginHandler } from '../src/handlers';
 
 export default async function (
   req: VercelRequest,
   res: VercelResponse,
 ): Promise<void> {
-  
+  await LoginHandler.execute(req, res);
 }

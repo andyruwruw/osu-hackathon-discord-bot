@@ -32,14 +32,6 @@ export const APPLICATION_COMMAND_TYPES = {
 };
 
 /**
- * Database type enum.
- */
-export const DATABASE_TYPES = {
-  MONGO: 'mongodb',
-  CACHE: 'cache',
-};
-
-/**
  * The default intents for the bot.
  */
 export const DISCORD_INTENTS: BitFieldResolvable<IntentsString, number> = [
