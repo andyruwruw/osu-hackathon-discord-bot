@@ -11,6 +11,7 @@ import {
   IPrize,
   IProject,
   IRole,
+  IUserToken,
 } from '../types';
 
 /**
@@ -51,6 +52,11 @@ export class Database {
    * Data access object for Roles.
    */
   role: IDataAccessObject<IRole> = null;
+
+  /**
+   * Data access object for UserTokens.
+   */
+  userToken: IDataAccessObject<IUserToken> = null;
 
   /**
    * Connects to database.

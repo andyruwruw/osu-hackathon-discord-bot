@@ -194,6 +194,21 @@ export interface IRole extends INameableGuildItem {
 }
 
 /**
+ * Login token for Discord dashboard.
+ */
+export interface IUserToken {
+  /**
+   * User's Discord ID.
+   */
+  userId: string;
+
+  /**
+   * Token used to login.
+   */
+  token: string;
+}
+
+/**
  * Types of data in the database.
  */
 export type DatabaseColumnTypes = string | number | boolean | Date | string[] | number[];
@@ -219,6 +234,11 @@ export interface IUpdateQuery {
 
 export interface IDataAccessObject<T> {
   create: (...args: any[]) => Promise<T>;
+
+  findOne: (
+    filter?: IQueryFilter,
+    projection?: IQueryProjection,
+  ) => Promise<T | null>;
 
   find: (
     filter?: IQueryFilter,

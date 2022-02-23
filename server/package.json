@@ -4,17 +4,23 @@
   "description": "This server is built to run on [Vercel's](https://vercel.com/) serverless functions.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "vercel dev"
   },
   "author": "Andrew Young",
   "license": "ISC",
   "dependencies": {
     "@vercel/node": "^1.13.0",
     "axios": "^0.26.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.3",
+    "qs": "^6.10.3"
   },
   "directories": {
     "test": "test"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/qs": "^6.9.7"
+  }
 }

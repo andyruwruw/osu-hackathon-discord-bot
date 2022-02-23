@@ -7,6 +7,7 @@ import {
   Prize,
   Project,
   Role,
+  UserToken,
 } from './daos';
 import {
   Monitor,
@@ -55,6 +56,11 @@ export class CacheDatabase extends Database {
   role: Role;
 
   /**
+   * Data access object for UserTokens.
+   */
+  userToken: UserToken
+
+  /**
    * Instantiates CacheDatabase with correct queries.
    */
   constructor() {
@@ -67,6 +73,7 @@ export class CacheDatabase extends Database {
     this.prize = new Prize();
     this.project = new Project();
     this.role = new Role();
+    this.userToken = new UserToken();
   }
 
   /**

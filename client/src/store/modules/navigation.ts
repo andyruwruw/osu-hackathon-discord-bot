@@ -76,14 +76,17 @@ const actions: ActionTree<NavigationState, any> = {
   requiresLogin({
     rootGetters,
     dispatch,
-  }): void {
+  }): boolean {
     try {
       if (!rootGetters['user/isLoggedIn']) {
         router.push('/');
+        return false;
       }
+      return true;
     } catch (error) {
       dispatch('goTo404');
     }
+    return false;
   },
 
   /**
@@ -111,7 +114,7 @@ const actions: ActionTree<NavigationState, any> = {
    *
    * @param {ActionContext<NavigationState, any>} context Vuex action context.
    */
-   goToDashboard({
+  goToDashboard({
     dispatch,
     rootGetters,
     state,

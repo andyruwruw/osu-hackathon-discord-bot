@@ -14,7 +14,12 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue'),
+    component: () => import('../views/auth/login.vue'),
+  },
+  {
+    path: '/callback',
+    name: 'Callback',
+    component: () => import('../views/auth/callback.vue'),
   },
   {
     path: '/dashboard/:id',

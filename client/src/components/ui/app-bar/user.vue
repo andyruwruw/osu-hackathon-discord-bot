@@ -4,10 +4,18 @@
 </template>
 
 <script lang="ts">
+// Packages
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
-  name: '404',
+  name: 'AppBarUser',
+
+  computed: {
+    ...mapGetters('user', [
+      'getUser',
+    ]),
+  },
 });
 </script>
 

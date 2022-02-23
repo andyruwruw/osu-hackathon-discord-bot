@@ -5,7 +5,7 @@ import {
 } from '@vercel/node';
 
 // Local Imports
-import { LoginHandler } from '../src/handlers';
+import { CheckUserHandler } from '../src/handlers';
 import { handleCors } from '../src/helpers/cors';
 
 export default async function (
@@ -16,7 +16,7 @@ export default async function (
     req,
     res,
   );
-  await LoginHandler.execute(
+  await CheckUserHandler.execute(
     req,
     res,
   );

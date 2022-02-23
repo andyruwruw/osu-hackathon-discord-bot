@@ -32,6 +32,26 @@ export class DataAccessObject<T> {
   }
 
   /**
+   * Finds one item in the Database.
+   *
+   * @param {IQueryFilter} filter The filter to apply to the query.
+   * @param {IQueryProjection} projection The projection to apply to the query.
+   * @returns {Promise<T | null>} The item.
+   */
+   async findOne(
+    filter: IQueryFilter = {},
+    projection: IQueryProjection = '',
+  ): Promise<T | null> {
+    const items = this._findFilterItems(filter);
+    const projectedItems = this._applyProjection(
+      items,
+      projection,
+    ) as unknown as T[];
+
+    return projectedItems[0] || null;
+  }
+
+  /**
    * Finds all of the item in the Database.
    *
    * @param {IQueryFilter} filter The filter to apply to the query.
@@ -40,7 +60,8 @@ export class DataAccessObject<T> {
    */
   async find(
     filter: IQueryFilter = {},
-    projection: IQueryProjection = ''): Promise<T[]> {
+    projection: IQueryProjection = '',
+  ): Promise<T[]> {
     const items = this._findFilterItems(filter);
     const projectedItems = this._applyProjection(
       items,

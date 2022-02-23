@@ -13,6 +13,7 @@ import {
   Prize,
   Project,
   Role,
+  UserToken,
 } from './daos';
 import {
   Monitor,
@@ -62,6 +63,11 @@ export class MongoDatabase extends Database {
   role: Role;
 
   /**
+   * Data access object for UserTokens.
+   */
+  userToken: UserToken
+
+  /**
    * Instantiates MongoDatabase with correct queries.
    */
   constructor() {
@@ -74,6 +80,7 @@ export class MongoDatabase extends Database {
     this.prize = new Prize();
     this.project = new Project();
     this.role = new Role();
+    this.userToken = new UserToken();
   }
 
   /**

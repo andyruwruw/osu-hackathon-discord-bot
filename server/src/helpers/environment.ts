@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 
 // Local Imports
 import {
-  DEVELOPMENT_REDIRECT_URL,
-  PRODUCTION_REDIRECT_URL,
+  DEVELOPMENT_URL,
+  PRODUCTION_URL,
 } from '../config';
 
 dotenv.config();
@@ -23,6 +23,15 @@ export class Environment {
   }
 
   /**
+   * Retreives Discord Client Secret.
+   *
+   * @returns {string} Discord client Secret.
+   */
+  static getDiscordClientSecret(): string {
+    return process.env.DISCORD_CLIENT_SECRET || '';
+  }
+
+  /**
    * Retreives authorization state.
    *
    * @returns {string} Authorization state.
@@ -36,7 +45,7 @@ export class Environment {
    * 
    * @returns {string} Password for connecting with database if needed.
    */
-   static getDatabasePassword(): string {
+  static getDatabasePassword(): string {
     return process.env.DATABASE_PASSWORD as string || '';
   }
 
@@ -74,8 +83,29 @@ export class Environment {
    */
   static getRedirectUrl(): string {
     if (process.env.ENVIRONMENT === 'production') {
-      return PRODUCTION_REDIRECT_URL;
+      return `${PRODUCTION_URL}/callback`;
     }
-    return DEVELOPMENT_REDIRECT_URL;
+    return `${DEVELOPMENT_URL}/callback`;
+  }
+
+  /**
+   * Returns origin URL depending on environment.
+   *
+   * @returns {string} Origin URL.
+   */
+  static getOrigin(): string {
+    if (process.env.ENVIRONMENT === 'production') {
+      return PRODUCTION_URL;
+    }
+    return DEVELOPMENT_URL;
+  }
+
+  /**
+   * Retrieves server secret.
+   *
+   * @returns {string} Server secret.
+   */
+   static getSecret(): string {
+    return process.env.SECRET || 'this_is_not_secret';
   }
 }
