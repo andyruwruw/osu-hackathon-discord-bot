@@ -38,8 +38,6 @@ export class CommandManager {
    * Fills command lists with commands.
    */
   static instantiateCommands() {
-    // Channel Commands
-    CommandManager._commands.push(new ChannelCommand());
     // General Commands
     CommandManager._commands.push(new HelpCommand());
     // Hackathon Commands
@@ -47,10 +45,6 @@ export class CommandManager {
     // Member Commands
     CommandManager._commands.push(new MeCommand());
     CommandManager._commands.push(new MemberCommand());
-    // Message Commands
-    CommandManager._commands.push(new CreateRoleAssignerCommand());
-    // Role Commands
-    CommandManager._commands.push(new RoleCommand());
   }
 
   /**
@@ -59,12 +53,9 @@ export class CommandManager {
    * @param {IDiscordBot} client The Discord.js client.
    */
   static async registerCommands(client: IDiscordBot): Promise<void> {
-    console.log('generating commands');
     const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
     const guilds = Object.values(client.getGuilds());
     const guildCommands = [] as Record<string, ApplicationCommand>[];
-
-    console.log(guilds.length);
 
     for (let i = 0; i < guilds.length; i += 1) {
       const guild = guilds[i];
@@ -72,12 +63,9 @@ export class CommandManager {
       guildCommands.push(await CommandManager._getGuildRegisteredCommands(guild));
     }
 
-    console.log(CommandManager._commands.length);
-
     for (let i = 0; i < CommandManager._commands.length; i += 1) {
       let shouldCreateApplication = true;
       const command = CommandManager._commands[i];
-      console.log(`command ${command.getKey()}`);
 
       if (command.getKey() in applicationCommands) {
         if (CommandManager._applicationCommandMatches(
@@ -93,8 +81,6 @@ export class CommandManager {
       if (shouldCreateApplication) {
         await client.application.commands.create(command.createRegistration());
       }
-
-      console.log(`going through guilds ${guilds.length}`);
 
       for (let j = 0; j < guilds.length; j += 1) {
         const guild = guilds[j];
@@ -156,7 +142,7 @@ export class CommandManager {
   /**
    * Retrieves commands previously registered with the client.
    *
-   * @param {CliIDiscordBotent} client Discord.js client.
+   * @param {DiscordBot} client Discord.js client.
    * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
    */
   static async _getApplicationRegisteredCommands(client: IDiscordBot): Promise<Record<string, ApplicationCommand>> {

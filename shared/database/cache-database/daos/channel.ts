@@ -31,9 +31,7 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
     return this._create({
       id,
       guildId,
-      isCommandChannel,
-      isAdminCommandChannel,
-      isErrorLog,
+      types,
     });
   }
 }

@@ -19,12 +19,9 @@ import {
   Monitor,
   MonitorLayer,
 } from './helpers/monitor';
-import {
-  MESSAGE_DATABASE_CONNECTION_SUCCESS,
-  MESSAGE_READY,
-} from './config/messages';
-import { getDatabase } from '../../shared/database';
+import { MESSAGE_READY } from './config/messages';
 import { CommandManager } from './commands';
+import { getDatabase } from '../../shared/database';
 
 // Types
 import { IDiscordBot } from './types';
@@ -72,7 +69,7 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
     this.on('ready', () => this._handleReady());
     this.on('error', (error: Error) => this._handleError(error));
     this.on('interactionCreate', (interaction: Interaction) => this._handleInteraction(interaction));
-    this.on('messageCreate', (message: Message) => this._handlemessageCreate(message));
+    this.on('messageCreate', (message: Message) => this._handleMessageCreate(message));
     this.on('guildMemberAdd', (member: GuildMember) => this._handleGuildMemberAdded(member));
     this.on('guildMemberRemove', (member: GuildMember | PartialGuildMember) => this._handleGuildMemberRemove(member));
     this.on('messageReactionAdd', (
@@ -87,7 +84,7 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
    */
   async _connectToDatabase(): Promise<void> {
     // Connect via Database instance.
-    await Database.connect();
+    await getDatabase().connect();
   }
 
   /**
@@ -132,7 +129,7 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
    *
    * @param {Message} message Message created.
    */
-  _handlemessageCreate(message: Message): void {
+  _handleMessageCreate(message: Message): void {
     CommandManager.handleMessage(message);
   }
 

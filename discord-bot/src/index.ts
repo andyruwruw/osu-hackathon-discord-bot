@@ -2,6 +2,12 @@
 import { DISCORD_INTENTS } from './config';
 import { DiscordBot } from './discord-bot';
 import { Environment } from './helpers/environment';
+import { initializeDatabase } from '../../shared/database';
+
+/**
+ * Sets database instance.
+ */
+initializeDatabase(Environment.getDatabaseType());
 
 // Creating a new Discord Bot.
 const server = new DiscordBot({

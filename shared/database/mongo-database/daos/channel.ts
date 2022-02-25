@@ -28,16 +28,12 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
   async create(
     id: string,
     guildId: string,
-    isCommandChannel = false,
-    isAdminCommandChannel = false,
-    isErrorLog = false,
+    types: string[] = [],
   ): Promise<IChannel> {
     return this._create({
       id,
       guildId,
-      isCommandChannel,
-      isAdminCommandChannel,
-      isErrorLog,
+      types,
     });
   }
 

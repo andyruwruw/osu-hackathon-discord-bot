@@ -9,15 +9,14 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  name: {
     type: String,
     required: true,
   },
-  types: {
-    type: Array,
-    of: String,
-    default: [],
+  icon: {
+    type: String,
+    default: '',
   },
 });
 
-export const ChannelModel = model('Channel', schema);
+export const GuildModel = model('Guild', schema);

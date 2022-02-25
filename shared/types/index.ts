@@ -1,7 +1,7 @@
 /**
  * Database item with an id.
  */
- interface IDatabaseModel {
+interface IDatabaseModel {
   /**
    * Unique identifier for the item, use Discord ID when available.
    */
@@ -16,6 +16,18 @@ interface IGuildItem extends IDatabaseModel {
    * Unique identifier for the Discord server.
    */
   guildId: string;
+}
+
+export interface IGuild extends IDatabaseModel {
+  /**
+   * Name of the item.
+   */
+  name: string;
+
+  /**
+   * Image of the item.
+   */
+  image: string;
 }
 
 /**
@@ -46,6 +58,11 @@ export interface IChannel extends INameableGuildItem {
    * Channel specific traits.
    */
   type: string[];
+
+  /**
+   * Parent channel id.
+   */
+  parent: string;
 }
 
 /**

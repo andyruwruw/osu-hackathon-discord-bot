@@ -2,7 +2,7 @@
 import { ApplicationCommandPermissionData } from 'discord.js';
 
 // Local Imports
-import { Database } from '../database';
+import { getDatabase } from '../../../shared/database';
 
 /**
  * Discord permission level for the command.
@@ -36,7 +36,7 @@ export class Permissions {
    * Converts the Permissions object into a Discord permission object.
    */
   async createPermissions(): Promise<ApplicationCommandPermissionData> {
-    const role = (await Database.role.find({
+    const role = (await (getDatabase()).role.find({
       type: this._type,
     }))[0];
 
