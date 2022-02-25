@@ -23,7 +23,7 @@ import {
   MESSAGE_DATABASE_CONNECTION_SUCCESS,
   MESSAGE_READY,
 } from './config/messages';
-import { Database } from './database';
+import { getDatabase } from '../../shared/database';
 import { CommandManager } from './commands';
 
 // Types
@@ -88,15 +88,6 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
   async _connectToDatabase(): Promise<void> {
     // Connect via Database instance.
     await Database.connect();
-
-    // If connection was successful, log success.
-    if (await Database.isConnected()) {
-      Monitor.log(
-        DiscordBot,
-        MESSAGE_DATABASE_CONNECTION_SUCCESS,
-        MonitorLayer.UPDATE,
-      );
-    }
   }
 
   /**

@@ -1,0 +1,228 @@
+/**
+ * Sample hackathons.
+ */
+export const HACKATHONS = [
+  {
+    id: '1',
+    guildId: '1',
+    name: 'Oregon State Beaverhacks Winter 2022',
+    theme: 'Data',
+    start: new Date('2022-01-05'),
+    end: new Date('2022-01-09'),
+    participants: 69,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+    ],
+  },
+  {
+    id: '2',
+    guildId: '1',
+    name: 'BeaverHacks Summer Sprint 2021',
+    theme: 'Gaming',
+    start: new Date('2021-07-09'),
+    end: new Date('2021-07-11'),
+    participants: 65,
+    prizePool: 500,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+    ],
+  },
+  {
+    id: '3',
+    guildId: '1',
+    name: 'BeaverHacks Summer 2020',
+    theme: 'Accessibility',
+    start: new Date('2020-06-18'),
+    end: new Date('2020-06-21'),
+    participants: 79,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+    ],
+  },
+  {
+    id: '4',
+    guildId: '1',
+    name: 'BeaverHacks Fall 2020',
+    theme: 'Health',
+    start: new Date('2020-09-10'),
+    end: new Date('2020-09-13'),
+    participants: 91,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+    ],
+  },
+  {
+    id: '5',
+    guildId: '1',
+    name: 'BeaverHacks Spring 2020',
+    theme: 'Community',
+    start: new Date('2020-03-27'),
+    end: new Date('2020-03-29'),
+    participants: 74,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+    ],
+  },
+  {
+    id: '6',
+    guildId: '1',
+    name: 'BeaverHacks Summer 2019',
+    theme: 'Time',
+    start: new Date('2020-06-20'),
+    end: new Date('2020-06-23'),
+    participants: 72,
+    prizePool: 0,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '6',
+      '7',
+    ],
+  },
+  {
+    id: '7',
+    guildId: '1',
+    name: 'BeaverHacks Spring 2021',
+    theme: 'Finance',
+    start: new Date('2020-04-08'),
+    end: new Date('2020-04-11'),
+    participants: 103,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+    ],
+  },
+  {
+    id: '8',
+    guildId: '1',
+    name: 'BeaverHacks Winter 2021',
+    theme: 'Education',
+    start: new Date('2020-12-17'),
+    end: new Date('2020-12-20'),
+    participants: 83,
+    prizePool: 400,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+    ],
+  },
+  {
+    id: '9',
+    guildId: '1',
+    name: 'Oregon State University Beaverhacks Fall 2021',
+    theme: 'Climate / Energy',
+    start: new Date('2021-09-16'),
+    end: new Date('2021-09-19'),
+    participants: 91,
+    prizePool: 550,
+    prizeIds: [
+      '1',
+      '2',
+      '3',
+      '4',
+    ],
+  },
+];
+
+/**
+ * Sample Prizes
+ */
+export const PRIZES = [
+  {
+    id: '1',
+    guildId: '1',
+    name: 'Overall',
+    description: 'This prize goes to the highest-scoring submission. It is available to all undergraduate teams including new student teams. Graduate and alumni teams are ineligible for this prize. If a new student team wins this prize, they are ineligible for the First Place New Student prize.',
+    index: 0,
+  },
+  {
+    id: '2',
+    guildId: '1',
+    name: 'Overall',
+    description: 'This prize goes to the second highest-scoring submission. It is available to all undergraduate teams including new student teams. Graduate and alumni teams are ineligible for this prize. If a new student team wins this prize, they are ineligible for the First Place New Student prize.',
+    index: 1,
+  },
+  {
+    id: '3',
+    guildId: '1',
+    name: 'Overall',
+    description: 'This prize goes to the third highest-scoring submission. It is available to all undergraduate teams including new student teams. Graduate and alumni teams are ineligible for this prize. If a new student team wins this prize, they are ineligible for the First Place New Student prize.',
+    index: 2,
+  },
+  {
+    id: '4',
+    guildId: '1',
+    name: 'New Student',
+    description: 'This award goes to the highest-scoring new student team. New student teams that won any of the "Overall" prizes are ineligible for this prize.',
+    index: 0,
+  },
+  {
+    id: '5',
+    guildId: '1',
+    name: 'Grad Student/Alumni',
+    description: 'All teams with one or more OSU graduate students / alumni on the team are eligible for this category and are ineligible for any monetary prizes offered by this hackathon.',
+    index: 0,
+  },
+  {
+    id: '6',
+    guildId: '1',
+    name: 'Best Console App',
+    description: 'The following will receive a Udemy Course or Audible credit per team member.',
+    index: 0,
+  },
+  {
+    id: '7',
+    guildId: '1',
+    name: 'Public Vote',
+    description: 'Selected by your peers, organizers and volunteers.',
+    index: 0,
+  },
+];
+
+/**
+ * Sample Projects
+ */
+export const PROJECTS = [
+  {
+    id: '1',
+    guildId: '1',
+    name: 'Spotify Cartography',
+    description: 'Explore your Spotify library in a 3D space that groups similar songs together based on their happiness, energy, danceability, and other variables. Using T-SNE and Three.js.',
+    hackathonId: '1',
+    imageUrl: 'https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_thumbnail_photos/001/787/627/datas/medium.jpg',
+    userIds: [
+      '1',
+    ],
+    liveUrl: 'https://spotify-cartography.vercel.app/',
+    demoUrl: 'https://www.youtube.com/watch?v=SSZak8W_P88',
+    prizeId: '1',
+  },
+];

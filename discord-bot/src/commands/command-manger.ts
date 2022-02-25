@@ -21,11 +21,8 @@ import {
   MeCommand,
   MemberCommand,
 } from './member';
-import { ChannelCommand } from './channel';
 import { HackathonCommand } from './hackathon';
 import { HelpCommand } from './general';
-import { CreateRoleAssignerCommand } from './message';
-import { RoleCommand } from './role';
 import { OfficerPermissions } from '../permissions';
 
 // Types

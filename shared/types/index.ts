@@ -41,21 +41,11 @@ interface IDescribableGuildItem extends INameableGuildItem {
 /**
  * Database representation of a Discord channel.
  */
-export interface IChannel extends IGuildItem {
+export interface IChannel extends INameableGuildItem {
   /**
-   * Whether the channel is the designated channel for commands.
+   * Channel specific traits.
    */
-  isCommandChannel: boolean;
-
-  /**
-   * Whether the channel is the designated channel for admin commands.
-   */
-  isAdminCommandChannel: boolean;
-
-  /**
-   * Whether the channel is the designated channel for error logs.
-   */
-  isErrorLog: boolean;
+  type: string[];
 }
 
 /**

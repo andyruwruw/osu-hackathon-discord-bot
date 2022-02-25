@@ -13,17 +13,10 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  isCommandChannel: {
-    type: Boolean,
-    default: false,
-  },
-  isAdminCommandChannel: {
-    type: Boolean,
-    default: false,
-  },
-  isErrorLog: {
-    type: Boolean,
-    default: false,
+  type: {
+    type: Array,
+    of: String,
+    default: [],
   },
 });
 
