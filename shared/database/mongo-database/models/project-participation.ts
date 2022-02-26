@@ -5,18 +5,14 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  id: {
+  member: {
     type: String,
     required: true,
   },
-  name: {
+  project: {
     type: String,
     required: true,
-  },
-  image: {
-    type: String,
-    default: '',
   },
 });
 
-export const GuildModel = model('Guild', schema);
+export const ProjectParticipationModel = model('ProjectParticipation', schema);

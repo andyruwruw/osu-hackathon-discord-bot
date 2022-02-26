@@ -5,18 +5,14 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  id: {
+  prize: {
     type: String,
     required: true,
   },
-  name: {
+  hackathon: {
     type: String,
     required: true,
-  },
-  image: {
-    type: String,
-    default: '',
   },
 });
 
-export const GuildModel = model('Guild', schema);
+export const HackathonPrizeModel = model('HackathonPrize', schema);

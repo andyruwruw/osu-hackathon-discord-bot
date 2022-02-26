@@ -9,7 +9,7 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
   },
@@ -23,7 +23,7 @@ const schema = new Schema({
   },
   type: {
     type: String,
-    default: 0,
+    default: '',
   },
 });
 

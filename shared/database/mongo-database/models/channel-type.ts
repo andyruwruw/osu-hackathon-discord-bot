@@ -5,14 +5,14 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  userId: {
+  channel: {
     type: String,
     required: true,
   },
-  token: {
+  type: {
     type: String,
     required: true,
   },
 });
 
-export const UserTokenModel = model('UserToken', schema);
+export const ChannelTypeModel = model('ChannelType', schema);

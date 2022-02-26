@@ -20,18 +20,18 @@ export class Guild extends DataAccessObject<IGuild> implements IDataAccessObject
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} name Name of the guild
-   * @param {string} [icon = ''] Icon hash.
+   * @param {string} [image = ''] Image hash.
    * @returns {IGuild} The Guild created.
    */
   async create(
     id: string,
     name: string,
-    icon: string = '',
+    image: string = '',
   ): Promise<IGuild> {
     return this._create({
       id,
       name,
-      icon,
+      image,
     });
   }
 

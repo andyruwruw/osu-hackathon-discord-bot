@@ -9,13 +9,25 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
   },
   name: {
     type: String,
     default: 'Unnamed',
+  },
+  description: {
+    type: String,
+    default: 'Unnamed',
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  banner: {
+    type: String,
+    default: '',
   },
   theme: {
     type: String,
@@ -27,18 +39,13 @@ const schema = new Schema({
   end: {
     type: Date,
   },
-  participants: {
-    type: Number,
-    default: 0,
+  href: {
+    type: String,
+    default: '',
   },
   prizePool: {
     type: Number,
     default: 0,
-  },
-  prizeIds: {
-    type: Array,
-    of: String,
-    default: [],
   },
 });
 

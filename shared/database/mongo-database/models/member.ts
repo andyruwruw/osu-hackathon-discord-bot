@@ -9,9 +9,29 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  nickname: {
+    type: String,
+    default: '',
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  level: {
+    type: Number,
+    default: 0,
+  },
+  xp: {
+    type: Number,
+    default: 0,
   },
 });
 

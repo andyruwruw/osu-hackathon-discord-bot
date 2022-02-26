@@ -5,18 +5,18 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  id: {
+  message: {
     type: String,
     required: true,
   },
-  name: {
+  emoji: {
     type: String,
     required: true,
   },
-  image: {
+  role: {
     type: String,
-    default: '',
+    required: true,
   },
 });
 
-export const GuildModel = model('Guild', schema);
+export const MessageRoleAssignmentModel = model('MessageRoleAssignment', schema);

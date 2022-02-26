@@ -9,21 +9,13 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
   },
-  isRoleAssigner: {
-    type: Boolean,
-    default: false,
-  },
-  roleAssignments: {
-    type: Array,
-    of: {
-      roleId: String,
-      emoji: String,
-    },
-    default: [],
+  type: {
+    type: String,
+    default: '',
   },
 });
 

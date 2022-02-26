@@ -9,14 +9,21 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
   },
-  types: {
-    type: Array,
-    of: String,
-    default: [],
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    default: '',
+  },
+  parent: {
+    type: String,
+    default: '',
   },
 });
 

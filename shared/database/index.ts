@@ -7,7 +7,7 @@ import { DATABASE_TYPES } from '../config';
 /**
  * Static instance of the database.
  */
-let DatabaseInstace = null;
+let DatabaseInstace: DatabaseClass | null = null;
 
 /**
  * Generates database based on environmental variables.

@@ -9,11 +9,11 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  guildId: {
+  guild: {
     type: String,
     required: true,
   },
-  hackathonId: {
+  hackathon: {
     type: String,
     required: true,
   },
@@ -25,25 +25,29 @@ const schema = new Schema({
     type: String,
     default: '',
   },
-  imageUrl: {
+  image: {
     type: String,
-    default: '#',
+    default: '',
   },
-  userIds: {
-    type: Array,
-    of: String,
-  },
-  liveUrl: {
+  href: {
     type: String,
-    default: '#',
+    default: '',
   },
-  demoUrl: {
+  live: {
     type: String,
-    default: '#',
+    default: '',
   },
-  prizeId: {
-    type: String || null,
-    default: null,
+  demo: {
+    type: String,
+    default: '',
+  },
+  github: {
+    type: String,
+    default: '',
+  },
+  prize: {
+    type: String,
+    default: '',
   },
 });
 

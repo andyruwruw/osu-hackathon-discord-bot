@@ -9,31 +9,9 @@ interface IDatabaseModel {
 }
 
 /**
- * Database item with an id, and guildId.
+ * Database item with a name.
  */
-interface IGuildItem extends IDatabaseModel {
-  /**
-   * Unique identifier for the Discord server.
-   */
-  guildId: string;
-}
-
-export interface IGuild extends IDatabaseModel {
-  /**
-   * Name of the item.
-   */
-  name: string;
-
-  /**
-   * Image of the item.
-   */
-  image: string;
-}
-
-/**
- * Database item with an id, guildId, and name.
- */
-interface INameableGuildItem extends IGuildItem {
+interface INameable {
   /**
    * Name of the item.
    */
@@ -41,9 +19,9 @@ interface INameableGuildItem extends IGuildItem {
 }
 
 /**
- * Database item with an id, guildId, name and description.
+ * Database item with a description.
  */
-interface IDescribableGuildItem extends INameableGuildItem {
+interface IDescribable {
   /**
    * Item description.
    */
@@ -51,14 +29,35 @@ interface IDescribableGuildItem extends INameableGuildItem {
 }
 
 /**
+ * Database item with an image.
+ */
+interface IImageable {
+  /**
+   * Item image.
+   */
+  image: string;
+}
+
+/**
+ * Database item with an id, and guildId.
+ */
+interface IGuildItem extends IDatabaseModel {
+  /**
+   * Unique identifier for the Discord server.
+   */
+  guild: string;
+}
+
+/**
+ * Database representation of a Discord server.
+ */
+export interface IGuild extends IDatabaseModel, INameable, IImageable {
+}
+
+/**
  * Database representation of a Discord channel.
  */
-export interface IChannel extends INameableGuildItem {
-  /**
-   * Channel specific traits.
-   */
-  type: string[];
-
+export interface IChannel extends IGuildItem, INameable, IDescribable {
   /**
    * Parent channel id.
    */
@@ -66,23 +65,28 @@ export interface IChannel extends INameableGuildItem {
 }
 
 /**
- * Database representation of a Discord server.
+ * Database representation of a Discord channel's type.
  */
-export interface IGuild extends IDatabaseModel {}
+export interface IChannelType {
+  /**
+   * Id of channel.
+   */
+  channel: string;
+
+  /**
+   * Type of channel.
+   */
+  type: string;
+}
 
 /**
  * Database representation of a hackathon.
  */
-export interface IHackathon extends INameableGuildItem {
+export interface IHackathon extends IGuildItem, INameable, IDescribable, IImageable {
   /**
-   * Theme of the hackathon.
+   * Link to banner image.
    */
-  theme: string;
-
-  /**
-   * Start date of the hackathon.
-   */
-  start: Date;
+  banner: string;
 
   /**
    * End date of the hackathon.
@@ -90,30 +94,120 @@ export interface IHackathon extends INameableGuildItem {
   end: Date;
 
   /**
-   * Number of participants in the hackathon.
+   * Link to DevPost Hackathon.
    */
-  participants: number;
+  href: string;
+
+  /**
+   * Start date of the hackathon.
+   */
+  start: Date;
+  
+  /**
+   * Theme of the hackathon.
+   */
+  theme: string;
 
   /**
    * Total prize pool amount.
    */
   prizePool: number;
+}
+
+/**
+ * Database linking table between prizes and hackathons.
+ */
+export interface IHackathonPrize {
+  /**
+   * Hackathon the prize is for.
+   */
+  hackathon: string;
 
   /**
-   * Unique identifier of the prizes in the hackathon.
+   * Prize id.
    */
-  prizeIds: string[];
+  prize: string;
+}
+
+/**
+ * Database representation of a hackathon prize.
+ */
+export interface IPrize extends IGuildItem, INameable, IDescribable {
+  /**
+   * Index of the prize.
+   */
+  index: number;
+}
+
+/**
+ * Database linking table between hackathons and members.
+ */
+export interface IHackathonParticipation {
+  /**
+   * Hackathon participated in.
+   */
+  hackathon: string;
+
+  /**
+   * Member id.
+   */
+  member: string;
+}
+
+/**
+ * Database representation of a hackathon project.
+ */
+export interface IProject extends IGuildItem, INameable, IDescribable, IImageable {
+  /**
+   * Hackathon the project belongs to.
+   */
+  hackathon: string;
+
+  /**
+   * URL to project page.
+   */
+  href: string;
+
+  /**
+   * Live URL with project.
+   */
+  live: string;
+
+  /**
+   * URL to demo video of project.
+   */
+  demo: string;
+
+  /**
+   * URL to project repository.
+   */
+  github: string;
+
+  /**
+   * ID of prize won.
+   */
+  prize: string;
+}
+
+/**
+ * Database linking table between projects and members.
+ */
+export interface IProjectParticipation {
+  /**
+   * Project participated in.
+   */
+  project: string;
+
+  /**
+   * Member id.
+   */
+  member: string;
 }
 
 /**
  * Database representation of a Discord member.
  */
-export interface IMember extends INameableGuildItem {
-  /**
-   * Profile picture of the member.
-   */
-  imageUrl: string;
-
+export interface IMember extends IGuildItem, INameable, IImageable {
   /**
    * Member's Discord level.
    */
@@ -126,69 +220,24 @@ export interface IMember extends INameableGuildItem {
 }
 
 /**
- * Database representation of a Discord message.
+ * Member login tokens
  */
-export interface IMessage extends IGuildItem {
+export interface IMemberToken {
   /**
-   * Whether this message assigns rolls based on reactions.
+   * Member id.
    */
-  isRoleAssigner: boolean;
+  member: string;
 
   /**
-   * What roles the message assignes based on reactions.
+   * Login token.
    */
-  roleAssignments: Record<string, string>[];
-}
-
-/**
- * Database representation of a hackathon prize.
- */
-export interface IPrize extends IDescribableGuildItem {
-  /**
-   * Index of the prize.
-   */
-  index: number;
-}
-
-/**
- * Database representation of a hackathon project.
- */
-export interface IProject extends IDescribableGuildItem {
-  /**
-   * Hackathon the project belongs to.
-   */
-  hackathonId: string;
-
-  /**
-   * Image of the project.
-   */
-  imageUrl: string;
-
-  /**
-   * Users associated with project.
-   */
-  userIds: string[];
-
-  /**
-   * Live URL with project.
-   */
-  liveUrl: string;
-
-  /**
-   * URL to demo video of project.
-   */
-  demoUrl: string;
-
-  /**
-   * ID of prize won.
-   */
-  prizeId: string | null;
+  token: string;
 }
 
 /**
  * Database representation of a Discord role.
  */
-export interface IRole extends INameableGuildItem {
+export interface IRole extends IGuildItem, INameable {
   /**
    * Color of the role.
    */
@@ -201,18 +250,34 @@ export interface IRole extends INameableGuildItem {
 }
 
 /**
- * Login token for Discord dashboard.
+ * Database linking table between roles and members.
  */
-export interface IUserToken {
+ export interface IMemberRole {
   /**
-   * User's Discord ID.
+   * Member id.
    */
-  userId: string;
+  member: string;
 
   /**
-   * Token used to login.
+   * Id of their role.
    */
-  token: string;
+  role: string;
+}
+
+/**
+ * Database representation of a Discord message.
+ */
+export interface IMessage extends IGuildItem {
+  type: string;
+}
+
+/**
+ * Allows messages to assign roles based on emoji reactions.
+ */
+export interface IMessageRoleAssignment {
+  message: string;
+  emoji: string;
+  role: string;
 }
 
 /**
