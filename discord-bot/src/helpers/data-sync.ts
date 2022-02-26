@@ -1,5 +1,5 @@
 // Packages
-import { Channel, Guild, OAuth2Guild } from 'discord.js';
+import { Channel, Guild, NonThreadGuildBasedChannel, OAuth2Guild } from 'discord.js';
 
 // Local Imports
 import { DiscordBot } from '../discord-bot';
@@ -33,7 +33,10 @@ export class DataSync {
     client: DiscordBot,
     guild: Guild,
   ): Promise<void> {
-    
+    const channels = await this._getChannelsFromGuild(guild);
+
+    for (let i = 0; i < channels.length; i += 1) {
+    }
   }
 
   static async checkMembers(client: DiscordBot): Promise<void> {
@@ -67,5 +70,9 @@ export class DataSync {
     const channels = [
       ...(await guild.channels.fetch()).values(),
     ];
+
+    return await Promise.all(channels.map((async (channel: NonThreadGuildBasedChannel) => {
+      return channel.fetch();
+    })));
   }
 }
