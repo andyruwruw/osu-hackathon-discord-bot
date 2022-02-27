@@ -3,8 +3,8 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  IHackathon,
   IDataAccessObject,
+  IHackathon,
 } from '../../../types';
 
 /**
@@ -15,37 +15,43 @@ export class Hackathon extends DataAccessObject<IHackathon> implements IDataAcce
    * Creates a Hackathon in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} guild Unique identifier for the Discord server.
    * @param {string} [name = 'Unnamed'] Name of the item.
-   * @param {string} [theme = 'TBA'] Theme of the hackathon.
+   * @param {string} [description = 'Unnamed'] Description of the item.
+   * @param {string} [image = ''] Image of the item.
+   * @param {string} [banner = ''] Banner image of the item.
    * @param {Date} [start = new Date()] Start date of the hackathon.
-   * @param {Date} [start = new Date()] End date of the hackathon.
-   * @param {number} [participants = -1] Number of participants in the hackathon.
+   * @param {string} [theme = 'TBA'] Theme of the hackathon.
+   * @param {Date} [end = new Date()] End date of the hackathon.
+   * @param {string} [href = ''] Href to hackathon site.
    * @param {number} [prizePool = -1] Total prize pool amount.
-   * @param {string[]} [prizeIds = []] Unique identifier of the prizes in the hackathon.
    * @returns {IHackathon} The hackathon created.
    */
   async create(
     id: string,
-    guildId: string,
+    guild: string,
     name = 'Unnamed',
+    description: '',
+    image: '',
+    banner: '',
     theme = 'TBA',
     start = new Date(0),
     end = new Date(0),
-    participants = -1,
+    href = '',
     prizePool = -1,
-    prizeIds = [] as string[],
   ): Promise<IHackathon> {
     return this._create({
       id,
-      guildId,
+      guild,
       name,
+      description,
+      image,
+      banner,
       theme,
       start,
       end,
-      participants,
+      href,
       prizePool,
-      prizeIds,
     });
   }
 }

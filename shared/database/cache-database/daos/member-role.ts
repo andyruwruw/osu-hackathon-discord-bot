@@ -1,9 +1,5 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { MemberRoleModel } from '../models';
 
 // Types
 import {
@@ -30,12 +26,5 @@ export class MemberRole extends DataAccessObject<IMemberRole> implements IDataAc
       role,
       member,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return MemberRoleModel;
   }
 }

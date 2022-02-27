@@ -3,8 +3,8 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  IMessage,
   IDataAccessObject,
+  IMessage,
 } from '../../../types';
 
 /**
@@ -15,20 +15,19 @@ export class Message extends DataAccessObject<IMessage> implements IDataAccessOb
    * Creates a Message in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} guild Unique identifier for the Discord server.
+   * @param {string} type Type of message.
    * @returns {IMessage} The message created.
    */
   async create(
     id: string,
-    guildId: string,
-    isRoleAssigner = false,
-    roleAssignments = [] as Record<string, string>[],
+    guild: string,
+    type = '',
   ): Promise<IMessage> {
     return this._create({
       id,
-      guildId,
-      isRoleAssigner,
-      roleAssignments,
+      guild,
+      type,
     });
   }
 }

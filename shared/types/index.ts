@@ -208,6 +208,7 @@ export interface IProjectParticipation {
  * Database representation of a Discord member.
  */
 export interface IMember extends IGuildItem, INameable, IImageable {
+  nickname: string;
   /**
    * Member's Discord level.
    */

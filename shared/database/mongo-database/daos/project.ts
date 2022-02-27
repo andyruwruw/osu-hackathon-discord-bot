@@ -19,32 +19,43 @@ export class Project extends DataAccessObject<IProject> implements IDataAccessOb
    * Creates a Project in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} guild Unique identifier for the Discord server.
+   * @param {string} hackathon Unique identifier for the hackathon.
+   * @param {string} name Name of the project.
+   * @param {string} description Description of the project.
+   * @param {string} image Image of the project.
+   * @param {string} href Link to project's page.
+   * @param {string} live Link to live site.
+   * @param {string} demo Link to demo.
+   * @param {string} github Link to repository.
+   * @param {string} prize Id of prize awarded.
    * @returns {IProject} The Project created.
    */
   async create(
     id: string,
-    guildId: string,
-    hackathonId: string,
+    guild: string,
+    hackathon: string,
     name: 'Unnamed',
     description = '',
-    imageUrl: string = '#',
-    userIds: string[] = [],
-    liveUrl: string = '#',
-    demoUrl: string = '#',
-    prizeId: string | null = null,
+    image = '',
+    href = '',
+    live = '',
+    demo = '',
+    github = '',
+    prize = '',
   ): Promise<IProject> {
     return this._create({
       id,
-      guildId,
+      guild,
       name, 
       description,
-      hackathonId,
-      imageUrl,
-      userIds,
-      liveUrl,
-      demoUrl,
-      prizeId,
+      hackathon,
+      image,
+      href,
+      live,
+      demo,
+      github,
+      prize,
     });
   }
 

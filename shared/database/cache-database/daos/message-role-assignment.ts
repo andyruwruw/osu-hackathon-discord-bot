@@ -1,9 +1,5 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { MessageRoleAssignmentModel } from '../models';
 
 // Types
 import {
@@ -33,12 +29,5 @@ export class MessageRoleAssignment extends DataAccessObject<IMessageRoleAssignme
       emoji,
       role,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return MessageRoleAssignmentModel;
   }
 }

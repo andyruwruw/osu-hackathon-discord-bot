@@ -3,8 +3,8 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  IMember,
   IDataAccessObject,
+  IMember,
 } from '../../../types';
 
 /**
@@ -15,7 +15,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
    * Creates a Member in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} guild Unique identifier for the Discord server.
    * @param {string} name Name of the item.
    * @param {string} imageUrl Members profile image.
    * @param {number} level Member's Discord level.
@@ -24,17 +24,19 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
    */
   async create(
     id: string,
-    guildId: string,
+    guild: string,
     name: string,
-    imageUrl: string = '#',
+    nickname: '',
+    image: string = '',
     level: number = 0,
     xp: number = 0,
   ): Promise<IMember> {
     return this._create({
       id,
-      guildId,
+      guild,
       name,
-      imageUrl,
+      nickname,
+      image,
       level,
       xp,
     });

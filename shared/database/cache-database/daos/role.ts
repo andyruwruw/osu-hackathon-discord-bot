@@ -3,8 +3,8 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  IRole,
   IDataAccessObject,
+  IRole,
 } from '../../../types';
 
 /**
@@ -15,7 +15,7 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
    * Creates a Role in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
+   * @param {string} guild Unique identifier for the Discord server.
    * @param {string} name Name of the role.
    * @param {string} color Color of the role.
    * @param {string} type Type of role.
@@ -23,14 +23,14 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
    */
   async create(
     id: string,
-    guildId: string,
+    guild: string,
     name = 'Unnamed',
     color = '#FF8000',
     type = 'default',
   ): Promise<IRole> {
     return this._create({
       id,
-      guildId,
+      guild,
       name,
       color,
       type,

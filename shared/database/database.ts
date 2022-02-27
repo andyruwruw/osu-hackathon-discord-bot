@@ -3,15 +3,22 @@ import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-erro
 
 // Types
 import {
+  IChannelType,
   IChannel,
   IDataAccessObject,
+  IGuild,
+  IHackathonParticipation,
+  IHackathonPrize,
   IHackathon,
+  IMemberRole,
+  IMemberToken,
   IMember,
+  IMessageRoleAssignment,
   IMessage,
   IPrize,
+  IProjectParticipation,
   IProject,
   IRole,
-  IUserToken,
 } from '../types';
 
 /**
@@ -19,9 +26,29 @@ import {
  */
 export class Database {
   /**
+   * Data access object for ChannelTypes.
+   */
+  channelType: IDataAccessObject<IChannelType> = null;
+
+  /**
    * Data access object for Channels.
    */
   channel: IDataAccessObject<IChannel> = null;
+
+  /**
+   * Data access object for Guilds.
+   */
+  guild: IDataAccessObject<IGuild> = null;
+
+  /**
+   * Data access object for HackathonParticipations.
+   */
+  hackathonParticipation: IDataAccessObject<IHackathonParticipation> = null;
+
+  /**
+   * Data access object for HackathonPrizes.
+   */
+  hackathonPrize: IDataAccessObject<IHackathonPrize> = null;
 
   /**
    * Data access object for Hackathons.
@@ -29,9 +56,24 @@ export class Database {
   hackathon: IDataAccessObject<IHackathon> = null;
 
   /**
+   * Data access object for MemberRoles.
+   */
+  memberRole: IDataAccessObject<IMemberRole> = null;
+
+  /**
+   * Data access object for MemberTokens.
+   */
+  memberToken: IDataAccessObject<IMemberToken> = null;
+
+  /**
    * Data access object for Members.
    */
   member: IDataAccessObject<IMember> = null;
+
+  /**
+   * Data access object for MessageRoleAssignments.
+   */
+  messageRoleAssignment: IDataAccessObject<IMessageRoleAssignment> = null;
 
   /**
    * Data access object for Messages.
@@ -42,6 +84,11 @@ export class Database {
    * Data access object for Prizes.
    */
   prize: IDataAccessObject<IPrize> = null;
+
+  /**
+   * Data access object for ProjectParticipations.
+   */
+  projectParticipation: IDataAccessObject<IProjectParticipation> = null;
  
   /**
    * Data access object for Projects.
@@ -52,11 +99,6 @@ export class Database {
    * Data access object for Roles.
    */
   role: IDataAccessObject<IRole> = null;
-
-  /**
-   * Data access object for UserTokens.
-   */
-  userToken: IDataAccessObject<IUserToken> = null;
 
   /**
    * Connects to database.

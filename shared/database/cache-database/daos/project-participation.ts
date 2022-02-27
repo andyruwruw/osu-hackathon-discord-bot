@@ -1,9 +1,5 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { ProjectParticipationModel } from '../models';
 
 // Types
 import {
@@ -30,12 +26,5 @@ export class ProjectParticipation extends DataAccessObject<IProjectParticipation
       project,
       member,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return ProjectParticipationModel;
   }
 }

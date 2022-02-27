@@ -1,9 +1,5 @@
-// Packages
-import { Model } from 'mongoose';
-
 // Local Imports
 import { DataAccessObject } from './dao';
-import { HackathonPrizeModel } from '../models';
 
 // Types
 import {
@@ -30,12 +26,5 @@ export class HackathonPrize extends DataAccessObject<IHackathonPrize> implements
       hackathon,
       prize,
     });
-  }
-
-  /**
-   * Retrieves mongoose Model for DataAccessObject.
-   */
-  _getModel(): Model<any, {}, {}, {}> {
-    return HackathonPrizeModel;
   }
 }

@@ -15,23 +15,25 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
    * Creates a Channel in the Database.
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
-   * @param {string} guildId Unique identifier for the Discord server.
-   * @param {boolean} [isCommandChannel = false] Whether the channel is the designated channel for commands.
-   * @param {boolean} [isAdminCommandChannel = false] Whether the channel is the designated channel for admin commands.
-   * @param {boolean} [isErrorLog = false] Whether the channel is the designated channel for error logs.
+   * @param {string} guild Unique identifier for the Discord server.
+   * @param {string} name Name of the channel.
+   * @param {string} description Description of the channel's purpose.
+   * @param {string} [parent = ''] Parent channel to this channel.
    * @returns {IChannel} The channel created.
    */
   async create(
     id: string,
-    guildId: string,
-    isCommandChannel = false,
-    isAdminCommandChannel = false,
-    isErrorLog = false,
+    guild: string,
+    name: string,
+    description: string,
+    parent: string = '',
   ): Promise<IChannel> {
     return this._create({
       id,
-      guildId,
-      types,
+      guild,
+      name,
+      description,
+      parent,
     });
   }
 }
