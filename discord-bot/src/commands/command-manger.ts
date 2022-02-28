@@ -1,6 +1,5 @@
 // Packages
 import {
-  Client,
   Guild,
   Interaction,
   Message,
@@ -24,7 +23,6 @@ import {
 } from './member';
 import { HackathonCommand } from './hackathon';
 import { HelpCommand } from './general';
-import { OfficerPermissions } from '../permissions';
 
 // Types
 import { IDiscordBot } from '../types';
@@ -72,63 +70,77 @@ export class CommandManager {
    * @param {IDiscordBot} client The Discord.js client.
    */
   static async registerCommands(client: IDiscordBot): Promise<void> {
-    const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
-    const guilds = Object.values(await client.getGuilds());
-    const guildCommands = [] as Record<string, ApplicationCommand>[];
+    try {
+      const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
+      const guilds = Object.values(await client.getGuilds());
+      const guildCommands = [] as Record<string, ApplicationCommand>[];
+  
+      for (let i = 0; i < guilds.length; i += 1) {
+        const guild = guilds[i];
+  
+        // guildCommands.push(await CommandManager._getGuildRegisteredCommands(guild));
+        const commands = await CommandManager._getGuildRegisteredCommands(guild);
+        const keys = Object.keys(commands);
 
-    for (let i = 0; i < guilds.length; i += 1) {
-      const guild = guilds[i];
+        for (let j = 0; j < keys.length; j += 1) {
+          guild.commands.delete(keys[j]);
+        }
+      }
+  
+      // for (let i = 0; i < CommandManager._commands.length; i += 1) {
+      //   let shouldCreateApplication = true;
+      //   const command = CommandManager._commands[i];
+  
+      //   if (command.getKey() in applicationCommands) {
+      //     if (CommandManager._applicationCommandMatches(
+      //       applicationCommands[command.getKey()],
+      //       command,
+      //     )) {
+      //       shouldCreateApplication = false;
+      //     } else {
+      //       await client.application.commands.delete(applicationCommands[command.getKey()].id);
+      //     }
+      //   }
+  
+      //   if (shouldCreateApplication) {
+      //     await client.application.commands.create(command.createRegistration());
+      //   }
+  
+      //   for (let j = 0; j < guilds.length; j += 1) {
+      //     const guild = guilds[j];
+      //     const commands = guildCommands[j];
+  
+      //     let shouldCreateGuild = true;
+  
+      //     if (command.getKey() in commands) {
+      //       if (CommandManager._applicationCommandMatches(
+      //         commands[command.getKey()],
+      //         command,
+      //       )) {
+      //         shouldCreateGuild = false;
+      //       } else {
+      //         await guild.commands.delete(commands[command.getKey()].id);
+      //       }
+      //     }
+  
+      //     if (shouldCreateGuild) {
+      //       await guild.commands.create(command.createRegistration());
+      //     }
+      //   }
+      // }
 
-      guildCommands.push(await CommandManager._getGuildRegisteredCommands(guild));
+      Monitor.log(
+        CommandManager,
+        MESSAGE_COMMANDS_REGISTERED,
+        MonitorLayer.UPDATE,
+      );
+    } catch (error) {
+      Monitor.log(
+        CommandManager,
+        error,
+        MonitorLayer.WARNING,
+      );
     }
-
-    for (let i = 0; i < CommandManager._commands.length; i += 1) {
-      let shouldCreateApplication = true;
-      const command = CommandManager._commands[i];
-
-      if (command.getKey() in applicationCommands) {
-        if (CommandManager._applicationCommandMatches(
-          applicationCommands[command.getKey()],
-          command,
-        )) {
-          shouldCreateApplication = false;
-        } else {
-          await client.application.commands.delete(command.getKey());
-        }
-      }
-
-      if (shouldCreateApplication) {
-        await client.application.commands.create(command.createRegistration());
-      }
-
-      for (let j = 0; j < guilds.length; j += 1) {
-        const guild = guilds[j];
-        const commands = guildCommands[j];
-
-        let shouldCreateGuild = true;
-
-        if (command.getKey() in commands) {
-          if (CommandManager._applicationCommandMatches(
-            commands[command.getKey()],
-            command,
-          )) {
-            shouldCreateGuild = false;
-          } else {
-            await guild.commands.delete(command.getKey());
-          }
-        }
-
-        if (shouldCreateGuild) {
-          await guild.commands.create(command.createRegistration());
-        }
-      }
-    }
-
-    Monitor.log(
-      CommandManager,
-      MESSAGE_COMMANDS_REGISTERED,
-      MonitorLayer.UPDATE,
-    );
   }
 
   /**

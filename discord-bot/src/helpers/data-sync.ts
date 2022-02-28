@@ -1,3 +1,8 @@
+/**
+ * This class helps the Discord bot update its database
+ * in the case that the bot is stopped and restarted.
+ */
+
 // Packages
 import {
   Guild,
@@ -8,8 +13,10 @@ import {
 } from 'discord.js';
 
 // Local Imports
+import { Monitor } from '../../../shared/helpers/monitor';
 import { DiscordBot } from '../discord-bot';
 import { getDatabase } from '../../../shared/database';
+import { MESSAGE_DATA_SYNCED } from '../config/messages';
 
 // Types
 import {
@@ -27,15 +34,21 @@ export class DataSync {
    * @param {DiscordBot} client Discord bot client.
    */
   static async syncDatabase(client: DiscordBot): Promise<void> {
-    await this._checkGuilds(client);
+    try {
+      await this._checkGuilds(client);
 
-    const databaseGuild = await getDatabase().guild.find();
-    const databaseChannels = await getDatabase().channel.find();
-    const databaseMembers = await getDatabase().member.find();
-
-    console.log(databaseGuild);
-    console.log(databaseChannels);
-    console.log(databaseMembers);
+      Monitor.log(
+        DataSync,
+        MESSAGE_DATA_SYNCED,
+        Monitor.Layer.UPDATE,
+      );
+    } catch (error) {
+      Monitor.log(
+        DataSync,
+        error,
+        Monitor.Layer.WARNING,
+      );
+    }
   }
 
   /**
@@ -158,7 +171,6 @@ export class DataSync {
    * @returns {Promise<GuildMember[]>} Members from the guild.
    */
   static async _getMembersFromGuild(guild: Guild): Promise<GuildMember[]> {
-    console.log(await guild.members.list());
     const members = [
       ...(await guild.members.list()).values(),
     ];

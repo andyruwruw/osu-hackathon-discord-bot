@@ -1,3 +1,9 @@
+/**
+ * Environmental variables are used throughout the the system,
+ * this class just enables a simple way to access these variables
+ * through static methods.
+ */
+
 // Packages
 import * as dotenv from 'dotenv';
 

@@ -3,6 +3,7 @@ import { APPLICATION_COMMAND_TYPES } from '../../config';
 import { Command } from '../command';
 import { HackathonSeeNextCommand } from './see-next';
 import { HackathonViewCommand } from './view';
+import { HackathonSubmissionsCommand } from './submissions';
 
 /**
  * Subcommands of this command.
@@ -10,6 +11,7 @@ import { HackathonViewCommand } from './view';
 const SUBCOMMANDS = [
   new HackathonSeeNextCommand(),
   new HackathonViewCommand(),
+  new HackathonSubmissionsCommand(),
 ];
 
 /**

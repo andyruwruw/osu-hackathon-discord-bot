@@ -31,15 +31,15 @@ const OPTIONS = [
 /**
  * Retrieves details on a previously held hackathon.
  */
-export class HackathonViewCommand extends Command {
+export class HackathonSubmissionsCommand extends Command {
   /**
-   * Instantiates a new HackathonViewCommand.
+   * Instantiates a new HackathonSubmissionsCommand.
    */
   constructor() {
     super(
-      'View Hackathon',
-      'view',
-      'Get details on a previous hackathon.',
+      'Hackathon Submissions',
+      'submissions',
+      'Show submissions from a hackathon.',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,
       false,
       OPTIONS,
@@ -60,7 +60,7 @@ export class HackathonViewCommand extends Command {
       return true;
     } catch (error) {
       Monitor.log(
-        HackathonViewCommand,
+        HackathonSubmissionsCommand,
         error,
         MonitorLayer.WARNING,
       );

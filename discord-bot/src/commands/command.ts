@@ -2,6 +2,7 @@
 import {
   ApplicationCommandData,
   ApplicationCommandOptionData,
+  Guild,
 } from 'discord.js';
 
 /**
@@ -47,6 +48,11 @@ export class Command {
    * Subcommands of the Command.
    */
   _subCommands: Command[];
+
+  /**
+   * Has choiced response cached.
+   */
+  _cachedHasChoices: boolean | null = null;
 
   /**
    * Instantiates a new Command.
@@ -95,7 +101,7 @@ export class Command {
     };
   }
 
-  async updateChoices(): Promise<boolean> {
+  async updateChoices(guild: Guild): Promise<boolean> {
     if (!this.hasChoices()) {
       return false;
     }
@@ -133,7 +139,7 @@ export class Command {
    *
    * @returns {boolean} Whether this command has additional options.
    */
-   hasOptions() {
+  hasOptions() {
     return this._options.length > 0;
   }
 
@@ -143,12 +149,21 @@ export class Command {
    * @returns {boolean} Whether this command has choices.
    */
   hasChoices() {
-    for (let i = 0; i < this._options.length; i += 1) {
-      if ('choices' in this._options[i]) {
-        return true;
+    if (this._cachedHasChoices !== null) {
+      if (!this.hasOptions()) {
+        this._cachedHasChoices = false;
+      } else {
+        for (let i = 0; i < this._options.length; i += 1) {
+          if ('choices' in this._options[i]) {
+            this._cachedHasChoices = true;
+            break;
+          } else if (i === this._options.length - 1) {
+            this._cachedHasChoices = false;
+          }
+        }
       }
     }
-    return false;
+    return this._cachedHasChoices;
   }
 
   /**
