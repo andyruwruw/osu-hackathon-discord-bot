@@ -1,9 +1,21 @@
 // Packages
-import { Channel, Guild, NonThreadGuildBasedChannel, OAuth2Guild } from 'discord.js';
+import {
+  Guild,
+  GuildChannel,
+  GuildMember,
+  NonThreadGuildBasedChannel,
+  OAuth2Guild,
+} from 'discord.js';
 
 // Local Imports
 import { DiscordBot } from '../discord-bot';
 import { getDatabase } from '../../../shared/database';
+
+// Types
+import {
+  IChannel,
+  IGuild,
+} from '../../../shared/types';
 
 /**
  * Ensures the database is synced with Discord.
@@ -15,31 +27,94 @@ export class DataSync {
    * @param {DiscordBot} client Discord bot client.
    */
   static async syncDatabase(client: DiscordBot): Promise<void> {
+    await this._checkGuilds(client);
 
+    const databaseGuild = await getDatabase().guild.find();
+    const databaseChannels = await getDatabase().channel.find();
+    const databaseMembers = await getDatabase().member.find();
+
+    console.log(databaseGuild);
+    console.log(databaseChannels);
+    console.log(databaseMembers);
   }
 
-  static async checkGuilds(client: DiscordBot): Promise<void> {
+  /**
+   * Ensures all guild the bot is apart of are in the database.
+   *
+   * @param {DiscordBot} client Discord.js bot client.
+   */
+  static async _checkGuilds(client: DiscordBot): Promise<void> {
     const guilds = await this._getGuildsFromClient(client);
+    const databaseGuildIds = (await getDatabase().guild.find()).map((guild: IGuild) => guild.id);
 
     for (let i = 0; i < guilds.length; i += 1) {
-      await this._checkChannels(
-        client,
-        guilds[i],
-      );
+      const guild = guilds[i];
+
+      if (!(databaseGuildIds.includes(guild.id))) {
+        await getDatabase().guild.create(
+          guild.id,
+          guild.name,
+          guild.icon,
+        );
+      }
+
+      await this._checkChannels(guild);
+      await this._checkMembers(guild);
     }
   }
 
-  static async _checkChannels(
-    client: DiscordBot,
-    guild: Guild,
-  ): Promise<void> {
+  /**
+   * Ensures all channels in a guild are in the database.
+   *
+   * @param {Guild} guild Discord guild to check.
+   */
+  static async _checkChannels(guild: Guild): Promise<void> {
     const channels = await this._getChannelsFromGuild(guild);
+    const databaseChannelIds = (await getDatabase().channel.find({
+      guild: guild.id,
+    })).map((channel: IChannel) => channel.id);
 
     for (let i = 0; i < channels.length; i += 1) {
+      const channel = channels[i];
+
+      if (!(databaseChannelIds.includes(guild.id))) {
+        await getDatabase().channel.create(
+          channel.id,
+          guild.id,
+          channel.name,
+          '',
+          channel.parentId,
+        );
+      }
     }
   }
 
-  static async checkMembers(client: DiscordBot): Promise<void> {
+  /**
+   * Ensures all members in a guild are in the database.
+   *
+   * @param {Guild} guild Discord guild to check.
+   */
+  static async _checkMembers(guild: Guild): Promise<void> {
+    const members = await this._getMembersFromGuild(guild);
+    const databaseMemberIds = (await getDatabase().member.find({
+      guild: guild.id,
+    })).map((member: IGuild) => member.id);
+
+    for (let i = 0; i < members.length; i += 1) {
+      const member = members[i];
+
+      if (!(databaseMemberIds.includes(member.id))) {
+        await getDatabase().member.create(
+          member.id,
+          guild.id,
+          member.user.username,
+          member.nickname,
+          member.user.avatar,
+          0,
+          0,
+        );
+      }
+    }
   }
 
   /**
@@ -64,9 +139,9 @@ export class DataSync {
    * Retrieves the channels from a guild.
    *
    * @param {Guild} guild Guild to retrieve channels from.
-   * @returns {Promise<Channel[]>} Channels from the guild.
+   * @returns {Promise<GuildChannel[]>} Channels from the guild.
    */
-  static async _getChannelsFromGuild(guild: Guild): Promise<Channel[]> {
+  static async _getChannelsFromGuild(guild: Guild): Promise<GuildChannel[]> {
     const channels = [
       ...(await guild.channels.fetch()).values(),
     ];
@@ -74,5 +149,20 @@ export class DataSync {
     return await Promise.all(channels.map((async (channel: NonThreadGuildBasedChannel) => {
       return channel.fetch();
     })));
+  }
+
+  /**
+   * Retrieves the memberss from a guild.
+   *
+   * @param {Guild} guild Guild to retrieve members from.
+   * @returns {Promise<GuildMember[]>} Members from the guild.
+   */
+  static async _getMembersFromGuild(guild: Guild): Promise<GuildMember[]> {
+    console.log(await guild.members.list());
+    const members = [
+      ...(await guild.members.list()).values(),
+    ];
+
+    return await Promise.all(members);
   }
 }

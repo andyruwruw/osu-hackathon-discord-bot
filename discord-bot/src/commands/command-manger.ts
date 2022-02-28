@@ -5,6 +5,7 @@ import {
   Interaction,
   Message,
   ApplicationCommand,
+  GuildResolvable,
 } from 'discord.js';
 
 // Local Import
@@ -48,13 +49,31 @@ export class CommandManager {
   }
 
   /**
+   * Handle an incoming interaction.
+   *
+   * @param {Interaction} interaction Interaction to check.
+   */
+  static handleInteraction(interaction: Interaction): void {
+    console.log('interaction', interaction);
+  }
+
+  /**
+   * Handle a message being sent.
+   *
+   * @param {Message} message The message to check.
+   */
+  static handleMessage(message: Message): void {
+    console.log(message);
+  }
+
+  /**
    * Registers slash commands with Discord.
    * 
    * @param {IDiscordBot} client The Discord.js client.
    */
   static async registerCommands(client: IDiscordBot): Promise<void> {
     const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
-    const guilds = Object.values(client.getGuilds());
+    const guilds = Object.values(await client.getGuilds());
     const guildCommands = [] as Record<string, ApplicationCommand>[];
 
     for (let i = 0; i < guilds.length; i += 1) {
@@ -100,16 +119,7 @@ export class CommandManager {
         }
 
         if (shouldCreateGuild) {
-          const createdCommand = await guild.commands.create(command.createRegistration());
-
-          if (command.isRestricted()) {
-            await guild.commands.permissions.add({
-              command: createdCommand.id,
-              permissions: [
-                (new OfficerPermissions()).createPermissions(),
-              ],
-            });
-          }
+          await guild.commands.create(command.createRegistration());
         }
       }
     }
@@ -122,36 +132,25 @@ export class CommandManager {
   }
 
   /**
-   * Handle an incoming interaction.
-   *
-   * @param {Interaction} interaction Interaction to check.
-   */
-  static handleInteraction(interaction: Interaction): void {
-    console.log('interaction', interaction);
-  }
-
-  /**
-   * Handle a message being sent.
-   *
-   * @param {Message} message The message to check.
-   */
-  static handleMessage(message: Message): void {
-    console.log(message);
-  }
-
-  /**
    * Retrieves commands previously registered with the client.
    *
    * @param {DiscordBot} client Discord.js client.
    * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
    */
   static async _getApplicationRegisteredCommands(client: IDiscordBot): Promise<Record<string, ApplicationCommand>> {
-    const items = Object.entries(await client.application.commands.fetch());
+    const applicationCommands = await client.application.commands.fetch();
+    const items = applicationCommands.reduce((
+      acc: ApplicationCommand<{ guild: GuildResolvable }>[],
+      command: ApplicationCommand<{ guild: GuildResolvable }>,
+    ) => {
+      acc.push(command);
+      return acc;
+    }, [] as ApplicationCommand<{ guild: GuildResolvable }>[]);
     const commands = {} as Record<string, ApplicationCommand>;
 
     for (let i = 0; i < items.length; i += 1) {
-      const command = items[i][1];
-      commands[command.name] = command;
+      const command = items[i];
+      commands[command.id] = command;
     }
 
     return commands;
@@ -163,8 +162,23 @@ export class CommandManager {
    * @param {Guild} guild 
    * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
    */
-  static _getGuildRegisteredCommands(guild: Guild): Promise<Record<string, ApplicationCommand>> {
-    return guild.commands.fetch() as unknown as Promise<Record<string, ApplicationCommand>>;
+  static async _getGuildRegisteredCommands(guild: Guild): Promise<Record<string, ApplicationCommand>> {
+    const guildCommands = await guild.commands.fetch();
+    const items = guildCommands.reduce((
+      acc: ApplicationCommand<{}>[],
+      command: ApplicationCommand<{}>,
+    ) => {
+      acc.push(command);
+      return acc;
+    }, [] as ApplicationCommand<{}>[]);
+    const commands = {} as Record<string, ApplicationCommand>;
+
+    for (let i = 0; i < items.length; i += 1) {
+      const command = items[i];
+      commands[command.id] = command;
+    }
+
+    return commands;
   }
 
   /**

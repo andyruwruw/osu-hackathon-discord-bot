@@ -7,6 +7,7 @@ import {
   Interaction,
   Message,
   MessageReaction,
+  OAuth2Guild,
   PartialGuildMember,
   PartialMessageReaction,
   PartialUser,
@@ -19,6 +20,7 @@ import {
   Monitor,
   MonitorLayer,
 } from './helpers/monitor';
+import { DataSync } from './helpers/data-sync';
 import { MESSAGE_READY } from './config/messages';
 import { CommandManager } from './commands';
 import { getDatabase } from '../../shared/database';
@@ -40,6 +42,8 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
 
     this._setEventHandlers();
     this._connectToDatabase();
+
+    DataSync.syncDatabase(this);
   }
 
   /**
@@ -48,15 +52,20 @@ export class DiscordBot extends DiscordClient implements IDiscordBot {
    * @returns {Promise<Record<string, Guild>>} Commands registered.
    */
   async getGuilds(): Promise<Record<string, Guild>> {
-    const oAuth2GUilds = Object.values(await this.guilds.fetch());
+    const oAuth2GUilds = await this.guilds.fetch();
+    const items = await Promise.all(oAuth2GUilds.reduce((
+      acc: Promise<Guild>[],
+      guild: OAuth2Guild,
+    ) => {
+      acc.push(this.guilds.fetch({
+        guild: guild.id,
+      }));
+      return acc;
+    }, [] as Promise<Guild>[]));
     const guilds = {} as Record<string, Guild>;
 
-    for (let i = 0; i < oAuth2GUilds.length; i += 1) {
-      const guild = await this.guilds.fetch({
-        guild: oAuth2GUilds[i].id,
-      });
-
-      guilds[guild.id] = guild;
+    for (let i = 0; i < items.length; i += 1) {
+      guilds[items[i].id] = items[i];
     }
 
     return guilds;

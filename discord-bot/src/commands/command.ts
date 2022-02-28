@@ -95,6 +95,13 @@ export class Command {
     };
   }
 
+  async updateChoices(): Promise<boolean> {
+    if (!this.hasChoices()) {
+      return false;
+    }
+    return true;
+  }
+
   /**
    * Finds a subcommand by key.
    *
@@ -119,6 +126,29 @@ export class Command {
       return this._subCommands[index];
     }
     return null;
+  }
+
+  /**
+   * Whether this command has additional options.
+   *
+   * @returns {boolean} Whether this command has additional options.
+   */
+   hasOptions() {
+    return this._options.length > 0;
+  }
+
+  /**
+   * Whether this command has an array of choices for parameters.
+   *
+   * @returns {boolean} Whether this command has choices.
+   */
+  hasChoices() {
+    for (let i = 0; i < this._options.length; i += 1) {
+      if ('choices' in this._options[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
