@@ -1,48 +1,44 @@
 /**
- * Resets formatting.
+ * This class replaces console.log for a more standardized
+ * way of logging. It also will enable us to send logs to
+ * a Discord channel for easier management.
  */
-const RESET = '\x1b[0m';
 
-/**
- * Format for different monitor layers.
- */
-export const MonitorLayerNameFormat: Record<string, string> = {
-  '0': '\x1b[90m', // DEBUG
-  '1': '\x1b[91m', // WARNING
-  '2': '\x1b[33m', // UPDATE
-};
-
-/**
- * Format for different monitor layers.
- */
-export const MonitorLayerMessageFormat: Record<string, string> = {
-  '0': '\x1b[90m', // DEBUG
-  '1': '\x1b[37m', // WARNING
-  '2': '\x1b[32m', // UPDATE
-};
-
-/**
- * Format for different monitor layers.
- */
-export const MonitorLayerEnabled: Record<string, boolean> = {
-  '0': true,
-  '1': true,
-  '2': true,
-};
-
-/**
- * Layers of monitor output.
- */
-export const MonitorLayer: Record<string, number> = {
-  DEBUG: 0,
-  WARNING: 1,
-  UPDATE: 2,
-};
+// Local Imports
+import {
+  STD_OUT_ESCAPE_CODE_RESET,
+  STD_OUT_MONITOR_LAYER_MESSAGE_FORMATING,
+  STD_OUT_MONITOR_LAYER_NAME_FORMATING,
+} from '../config';
 
 /**
  * Proxy to console.
  */
 export class Monitor {
+  /**
+   * Layers of monitor output.
+   */
+  static Layer: Record<string, number> = {
+    DEBUG: 0,
+    WARNING: 1,
+    UPDATE: 2,
+  };
+
+  /**
+   * Whether the debug layer is active.
+   */
+  static _debugLayerActive = true;
+
+  /**
+   * Whether the warning layer is active.
+   */
+  static _warningLayerActive = true;
+
+  /**
+   * Whether the update layer is active.
+   */
+  static _updateLayerActive = true;
+
   /**
    * Print a statement to the console.
    *
@@ -54,10 +50,10 @@ export class Monitor {
     text: string,
     layer: number = 0,
   ) {
-    if (MonitorLayerEnabled[`${layer}`]) {
+    if (Monitor._shouldLog(layer)) {
       console.log(
-        `${MonitorLayerNameFormat[`${layer}`]}[${source.name}]:${RESET}`,
-        `${MonitorLayerMessageFormat[`${layer}`]}${text}${RESET}`,
+        `${STD_OUT_MONITOR_LAYER_NAME_FORMATING[`${layer}`]}[${source.name}]:${STD_OUT_ESCAPE_CODE_RESET}`,
+        `${STD_OUT_MONITOR_LAYER_MESSAGE_FORMATING[`${layer}`]}${text}${STD_OUT_ESCAPE_CODE_RESET}`,
       );
     }
   }
@@ -65,14 +61,28 @@ export class Monitor {
   /**
    * Displays memory update.
    */
-  static memory() {
+  static logMemory() {
     const mbUsed = Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100;
 
     Monitor.log(
       Monitor,
       `Memory in Use: ${mbUsed} MB`,
-      MonitorLayer.WARNING,
+      Monitor.Layer.WARNING,
     );
+  }
+
+  /**
+   * Returns whether or not the layer is active.
+   * @param {number} layer Monitor layer.
+   * @returns {boolean} Whether the layer is active.
+   */
+   static _shouldLog(layer: number) {
+    if (layer === Monitor.Layer.DEBUG) {
+      return Monitor._debugLayerActive;
+    } else if (layer === Monitor.Layer.WARNING) {
+      return Monitor._warningLayerActive;
+    }
+    return Monitor._updateLayerActive;
   }
 }
   

@@ -26,7 +26,7 @@ export class Guild extends DataAccessObject<IGuild> implements IDataAccessObject
   async create(
     id: string,
     name: string,
-    image: string = '',
+    image = '',
   ): Promise<IGuild> {
     return this._create({
       id,

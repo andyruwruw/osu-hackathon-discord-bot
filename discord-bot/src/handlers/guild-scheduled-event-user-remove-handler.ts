@@ -6,6 +6,7 @@ import {
 
 // Local Imports
 import { Handler } from './handler';
+import { Monitor } from '../../../shared/helpers/monitor';
 
 /**
  * Handles discord.js guildScheduledEventUserRemove event.
@@ -14,9 +15,18 @@ export class GuildScheduledEventUserRemoveHandler extends Handler<GuildScheduled
   /**
    * Handles the event.
    */
-  execute(
+  async execute(
     guildScheduledEvent: GuildScheduledEvent,
     user: User,
   ) {
+    try {
+      // Still need to see if we need to do anything here.
+    } catch (error) {
+      Monitor.log(
+        GuildScheduledEventUserRemoveHandler,
+        error,
+        Monitor.Layer.WARNING,
+      );
+    }
   }
 }

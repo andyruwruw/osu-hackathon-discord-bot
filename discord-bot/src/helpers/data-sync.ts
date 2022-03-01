@@ -67,7 +67,7 @@ export class DataSync {
         await getDatabase().guild.create(
           guild.id,
           guild.name,
-          guild.icon,
+          guild.iconURL(),
         );
       }
 

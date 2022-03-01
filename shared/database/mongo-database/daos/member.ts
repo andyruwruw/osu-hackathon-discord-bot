@@ -21,19 +21,22 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guild Unique identifier for the Discord server.
    * @param {string} name Name of the item.
-   * @param {string} imageUrl Members profile image.
-   * @param {number} level Member's Discord level.
-   * @param {number} xp Member's XP to the next level.
+   * @param {string} [nickname = ''] User's server nickname.
+   * @param {string} [imageUrl = ''] Members profile image.
+   * @param {number} [level = 0] Member's Discord level.
+   * @param {number} [xp = 0] Member's XP to the next level.
+   * @param {boolean} [active = false] Whether the member is active.
    * @returns {IMember} The member created.
    */
   async create(
     id: string,
     guild: string,
     name: string,
-    nickname: '',
-    image: string = '',
-    level: number = 0,
-    xp: number = 0,
+    nickname = '',
+    image = '',
+    level = 0,
+    xp = 0,
+    active = false,
   ): Promise<IMember> {
     return this._create({
       id,
@@ -43,6 +46,7 @@ export class Member extends DataAccessObject<IMember> implements IDataAccessObje
       image,
       level,
       xp,
+      active,
     });
   }
 

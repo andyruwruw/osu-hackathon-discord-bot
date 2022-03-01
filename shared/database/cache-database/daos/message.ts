@@ -16,7 +16,7 @@ export class Message extends DataAccessObject<IMessage> implements IDataAccessOb
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guild Unique identifier for the Discord server.
-   * @param {string} type Type of message.
+   * @param {string} [type = ''] Type of message.
    * @returns {IMessage} The message created.
    */
   async create(

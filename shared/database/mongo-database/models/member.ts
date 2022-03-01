@@ -33,6 +33,10 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const MemberModel = model('Member', schema);

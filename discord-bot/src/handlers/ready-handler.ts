@@ -14,15 +14,23 @@ export class ReadyHandler extends Handler<Client> {
   /**
    * Handles the event.
    */
-  execute(client: Client) {
-    Monitor.log(
-      ReadyHandler,
-      MESSAGE_READY,
-      Monitor.Layer.UPDATE,
-    );
-
-    // Register slash commands.
-    CommandManager.instantiateCommands();
-    CommandManager.registerCommands(Handler._client);
+  async execute(client: Client) {
+    try {
+      Monitor.log(
+        ReadyHandler,
+        MESSAGE_READY,
+        Monitor.Layer.UPDATE,
+      );
+  
+      // Register slash commands.
+      CommandManager.instantiateCommands();
+      await CommandManager.registerCommands(Handler._client);
+    } catch (error) {
+      Monitor.log(
+        ReadyHandler,
+        error,
+        Monitor.Layer.WARNING,
+      );
+    }
   }
 }

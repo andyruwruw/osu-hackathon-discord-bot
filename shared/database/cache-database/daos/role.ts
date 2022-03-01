@@ -16,9 +16,9 @@ export class Role extends DataAccessObject<IRole> implements IDataAccessObject<I
    *
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guild Unique identifier for the Discord server.
-   * @param {string} name Name of the role.
-   * @param {string} color Color of the role.
-   * @param {string} type Type of role.
+   * @param {string} [name = 'Unnamed'] Name of the role.
+   * @param {string} [color = '#FF8000'] Color of the role.
+   * @param {string} [type = 'default'] Type of role.
    * @returns {IRole} The Role created.
    */
   async create(

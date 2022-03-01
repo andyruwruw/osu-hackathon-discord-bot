@@ -218,6 +218,11 @@ export interface IMember extends IGuildItem, INameable, IImageable {
    * Member's XP to the next level.
    */
   xp: number;
+
+  /**
+   * Whether they are active (a part of the server or banned).
+   */
+   active: boolean;
 }
 
 /**

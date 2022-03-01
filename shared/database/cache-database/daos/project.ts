@@ -17,14 +17,14 @@ export class Project extends DataAccessObject<IProject> implements IDataAccessOb
    * @param {string} id Unique identifier for the item, use Discord ID when available.
    * @param {string} guild Unique identifier for the Discord server.
    * @param {string} hackathon Unique identifier for the hackathon.
-   * @param {string} name Name of the project.
-   * @param {string} description Description of the project.
-   * @param {string} image Image of the project.
-   * @param {string} href Link to project's page.
-   * @param {string} live Link to live site.
-   * @param {string} demo Link to demo.
-   * @param {string} github Link to repository.
-   * @param {string} prize Id of prize awarded.
+   * @param {string} [name = ''] Name of the project.
+   * @param {string} [description = ''] Description of the project.
+   * @param {string} [image = ''] Image of the project.
+   * @param {string} [href = ''] Link to project's page.
+   * @param {string} [live = ''] Link to live site.
+   * @param {string} [demo = ''] Link to demo.
+   * @param {string} [github = ''] Link to repository.
+   * @param {string} [prize = ''] Id of prize awarded.
    * @returns {IProject} The Project created.
    */
   async create(

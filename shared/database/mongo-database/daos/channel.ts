@@ -30,7 +30,7 @@ export class Channel extends DataAccessObject<IChannel> implements IDataAccessOb
     guild: string,
     name: string,
     description: string,
-    parent: string = '',
+    parent = '',
   ): Promise<IChannel> {
     return this._create({
       id,
