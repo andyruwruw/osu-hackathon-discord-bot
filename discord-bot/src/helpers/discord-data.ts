@@ -9,9 +9,11 @@
 
 // Packages
 import {
+  ApplicationCommand,
   Guild,
   GuildChannel,
   GuildMember,
+  GuildResolvable,
   NonThreadGuildBasedChannel,
   OAuth2Guild,
 } from 'discord.js';
@@ -183,4 +185,74 @@ export const getGuildMembersAsHashmap = async (guild: Guild): Promise<Record<str
     );
   }
   return {} as Record<string, GuildMember>;
+}
+
+/**
+ * Retrieves commands previously registered with the client.
+ *
+ * @param {DiscordBot} client Discord.js client.
+ * @returns {Promise<Record<ApplicationCommand[]>} Commands registered.
+ */
+export const getApplicationRegisteredCommands = async (client: DiscordBot): Promise<ApplicationCommand[]> => {
+  const applicationCommands = await client.application.commands.fetch();
+  return applicationCommands.reduce((
+    acc: ApplicationCommand<{ guild: GuildResolvable }>[],
+    command: ApplicationCommand<{ guild: GuildResolvable }>,
+  ) => {
+    acc.push(command);
+    return acc;
+  }, [] as ApplicationCommand<{ guild: GuildResolvable }>[]);
+}
+
+/**
+ * Retrieves commands previously registered with the client.
+ *
+ * @param {DiscordBot} client Discord.js client.
+ * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
+ */
+export const getApplicationRegisteredCommandsAsHashmap = async (client: DiscordBot): Promise<Record<string, ApplicationCommand>> => {
+  const items = await getApplicationRegisteredCommands(client);
+  const commands = {} as Record<string, ApplicationCommand>;
+
+  for (let i = 0; i < items.length; i += 1) {
+    const command = items[i];
+    commands[command.id] = command;
+  }
+
+  return commands;
+}
+
+/**
+ * Retrieves commands previously registered with the guild.
+ *
+ * @param {Guild} guild 
+ * @returns {Promise<ApplicationCommand[]>} Commands registered.
+ */
+export const getGuildRegisteredCommands = async (guild: Guild): Promise<ApplicationCommand[]> => {
+  const guildCommands = await guild.commands.fetch();
+  return guildCommands.reduce((
+    acc: ApplicationCommand<{}>[],
+    command: ApplicationCommand<{}>,
+  ) => {
+    acc.push(command);
+    return acc;
+  }, [] as ApplicationCommand<{}>[]);
+}
+
+/**
+ * Retrieves commands previously registered with the guild.
+ *
+ * @param {Guild} guild 
+ * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
+ */
+export const getGuildRegisteredCommandsAsHashmap = async (guild: Guild): Promise<Record<string, ApplicationCommand>> => {
+  const items = await getGuildRegisteredCommands(guild);
+  const commands = {} as Record<string, ApplicationCommand>;
+
+  for (let i = 0; i < items.length; i += 1) {
+    const command = items[i];
+    commands[command.id] = command;
+  }
+
+  return commands;
 }

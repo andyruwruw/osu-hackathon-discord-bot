@@ -4,17 +4,18 @@ import {
   Interaction,
   Message,
   ApplicationCommand,
-  GuildResolvable,
 } from 'discord.js';
 
 // Local Import
 import {
-  Monitor,
-  MonitorLayer,
-} from '../helpers/monitor';
-import { Command } from './command';
-import { MESSAGE_COMMANDS_REGISTERED } from '../config/messages';
+  getApplicationRegisteredCommandsAsHashmap,
+  getClientGuilds,
+  getGuildRegisteredCommandsAsHashmap,
+} from '../helpers/discord-data';
 import { APPLICATION_COMMAND_TYPES } from '../config';
+import { Command } from './command';
+import { DiscordBot } from '../discord-bot';
+import { MESSAGE_COMMANDS_REGISTERED } from '../config/messages';
 
 // Commands
 import {
@@ -23,9 +24,7 @@ import {
 } from './member';
 import { HackathonCommand } from './hackathon';
 import { HelpCommand } from './general';
-
-// Types
-import { IDiscordBot } from '../types';
+import { Monitor } from '../../../shared/helpers/monitor';
 
 /**
  * Manages all commands and routes interactions to correct command.
@@ -67,130 +66,74 @@ export class CommandManager {
   /**
    * Registers slash commands with Discord.
    * 
-   * @param {IDiscordBot} client The Discord.js client.
+   * @param {DiscordBot} client The Discord.js client.
    */
-  static async registerCommands(client: IDiscordBot): Promise<void> {
+  static async registerCommands(client: DiscordBot): Promise<void> {
     try {
-      const applicationCommands = await CommandManager._getApplicationRegisteredCommands(client);
-      const guilds = Object.values(await client.getGuilds());
+      const applicationCommands = await getApplicationRegisteredCommandsAsHashmap(client);
+      const guilds = await getClientGuilds(client);
       const guildCommands = [] as Record<string, ApplicationCommand>[];
   
       for (let i = 0; i < guilds.length; i += 1) {
         const guild = guilds[i];
   
-        // guildCommands.push(await CommandManager._getGuildRegisteredCommands(guild));
-        const commands = await CommandManager._getGuildRegisteredCommands(guild);
-        const keys = Object.keys(commands);
-
-        for (let j = 0; j < keys.length; j += 1) {
-          guild.commands.delete(keys[j]);
-        }
+        guildCommands.push(await getGuildRegisteredCommandsAsHashmap(guild));
       }
   
-      // for (let i = 0; i < CommandManager._commands.length; i += 1) {
-      //   let shouldCreateApplication = true;
-      //   const command = CommandManager._commands[i];
+      for (let i = 0; i < CommandManager._commands.length; i += 1) {
+        let shouldCreateApplication = true;
+        const command = CommandManager._commands[i];
   
-      //   if (command.getKey() in applicationCommands) {
-      //     if (CommandManager._applicationCommandMatches(
-      //       applicationCommands[command.getKey()],
-      //       command,
-      //     )) {
-      //       shouldCreateApplication = false;
-      //     } else {
-      //       await client.application.commands.delete(applicationCommands[command.getKey()].id);
-      //     }
-      //   }
+        if (command.getKey() in applicationCommands) {
+          if (CommandManager._applicationCommandMatches(
+            applicationCommands[command.getKey()],
+            command,
+          )) {
+            shouldCreateApplication = false;
+          } else {
+            await client.application.commands.delete(applicationCommands[command.getKey()].id);
+          }
+        }
   
-      //   if (shouldCreateApplication) {
-      //     await client.application.commands.create(command.createRegistration());
-      //   }
+        if (shouldCreateApplication) {
+          await client.application.commands.create(command.createRegistration());
+        }
   
-      //   for (let j = 0; j < guilds.length; j += 1) {
-      //     const guild = guilds[j];
-      //     const commands = guildCommands[j];
+        for (let j = 0; j < guilds.length; j += 1) {
+          const guild = guilds[j];
+          const commands = guildCommands[j];
   
-      //     let shouldCreateGuild = true;
+          let shouldCreateGuild = true;
   
-      //     if (command.getKey() in commands) {
-      //       if (CommandManager._applicationCommandMatches(
-      //         commands[command.getKey()],
-      //         command,
-      //       )) {
-      //         shouldCreateGuild = false;
-      //       } else {
-      //         await guild.commands.delete(commands[command.getKey()].id);
-      //       }
-      //     }
+          if (command.getKey() in commands) {
+            if (CommandManager._applicationCommandMatches(
+              commands[command.getKey()],
+              command,
+            )) {
+              shouldCreateGuild = false;
+            } else {
+              await guild.commands.delete(commands[command.getKey()].id);
+            }
+          }
   
-      //     if (shouldCreateGuild) {
-      //       await guild.commands.create(command.createRegistration());
-      //     }
-      //   }
-      // }
+          if (shouldCreateGuild) {
+            await guild.commands.create(command.createRegistration());
+          }
+        }
+      }
 
       Monitor.log(
         CommandManager,
         MESSAGE_COMMANDS_REGISTERED,
-        MonitorLayer.UPDATE,
+        Monitor.Layer.UPDATE,
       );
     } catch (error) {
       Monitor.log(
         CommandManager,
         error,
-        MonitorLayer.WARNING,
+        Monitor.Layer.WARNING,
       );
     }
-  }
-
-  /**
-   * Retrieves commands previously registered with the client.
-   *
-   * @param {DiscordBot} client Discord.js client.
-   * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
-   */
-  static async _getApplicationRegisteredCommands(client: IDiscordBot): Promise<Record<string, ApplicationCommand>> {
-    const applicationCommands = await client.application.commands.fetch();
-    const items = applicationCommands.reduce((
-      acc: ApplicationCommand<{ guild: GuildResolvable }>[],
-      command: ApplicationCommand<{ guild: GuildResolvable }>,
-    ) => {
-      acc.push(command);
-      return acc;
-    }, [] as ApplicationCommand<{ guild: GuildResolvable }>[]);
-    const commands = {} as Record<string, ApplicationCommand>;
-
-    for (let i = 0; i < items.length; i += 1) {
-      const command = items[i];
-      commands[command.id] = command;
-    }
-
-    return commands;
-  }
-
-  /**
-   * Retrieves commands previously registered with the guild.
-   *
-   * @param {Guild} guild 
-   * @returns {Promise<Record<string, ApplicationCommand>>} Commands registered.
-   */
-  static async _getGuildRegisteredCommands(guild: Guild): Promise<Record<string, ApplicationCommand>> {
-    const guildCommands = await guild.commands.fetch();
-    const items = guildCommands.reduce((
-      acc: ApplicationCommand<{}>[],
-      command: ApplicationCommand<{}>,
-    ) => {
-      acc.push(command);
-      return acc;
-    }, [] as ApplicationCommand<{}>[]);
-    const commands = {} as Record<string, ApplicationCommand>;
-
-    for (let i = 0; i < items.length; i += 1) {
-      const command = items[i];
-      commands[command.id] = command;
-    }
-
-    return commands;
   }
 
   /**
@@ -220,11 +163,11 @@ export class CommandManager {
   /**
    * Deletes an application command.
    *
-   * @param {IDiscordBot} client Discord.js client.
+   * @param {DiscordBot} client Discord.js client.
    * @param {ApplicationCommand} command 
    */
   static async _deleteApplicationCommand(
-    client: IDiscordBot,
+    client: DiscordBot,
     command: ApplicationCommand,
   ): Promise<void> {
     await client.application.commands.delete(command.id);
