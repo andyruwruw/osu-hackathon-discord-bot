@@ -2,6 +2,9 @@
  * Environmental variables are used throughout the the system,
  * this class just enables a simple way to access these variables
  * through static methods.
+ * 
+ * If you add a new .env variable, add a static method to the 
+ * Environment class.
  */
 
 // Packages
@@ -83,5 +86,14 @@ export class Environment {
    */
   static getDiscordBotToken(): string {
     return process.env.DISCORD_BOT_TOKEN;
+  }
+
+  /**
+   * Retrieves discord application Id.
+   * 
+   * @returns {string} Discord application Id.
+   */
+   static getDiscordApplicationId(): string {
+    return process.env.DISCORD_APPLICATION_ID;
   }
 }

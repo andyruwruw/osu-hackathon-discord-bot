@@ -216,7 +216,7 @@ export const getApplicationRegisteredCommandsAsHashmap = async (client: DiscordB
 
   for (let i = 0; i < items.length; i += 1) {
     const command = items[i];
-    commands[command.id] = command;
+    commands[command.name] = command;
   }
 
   return commands;
@@ -251,7 +251,7 @@ export const getGuildRegisteredCommandsAsHashmap = async (guild: Guild): Promise
 
   for (let i = 0; i < items.length; i += 1) {
     const command = items[i];
-    commands[command.id] = command;
+    commands[command.name] = command;
   }
 
   return commands;

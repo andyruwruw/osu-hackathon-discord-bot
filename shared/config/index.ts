@@ -26,5 +26,5 @@ export const STD_OUT_MONITOR_LAYER_NAME_FORMATING: Record<string, string> = {
 export const STD_OUT_MONITOR_LAYER_MESSAGE_FORMATING: Record<string, string> = {
   '0': '\x1b[90m', // DEBUG
   '1': '\x1b[37m', // WARNING
-  '2': '\x1b[32m', // UPDATE
+  '2': '\x1b[37m', // UPDATE
 };

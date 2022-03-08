@@ -24,3 +24,5 @@ export class RoleDeleteHandler extends Handler<Role> {
     }
   }
 }
+
+export const RoleDeleteHandlerInstance = new RoleDeleteHandler();

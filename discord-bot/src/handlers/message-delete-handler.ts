@@ -24,3 +24,5 @@ export class MessageDeleteHandler extends Handler<Message> {
     }
   }
 }
+
+export const MessageDeleteHandlerInstance = new MessageDeleteHandler();

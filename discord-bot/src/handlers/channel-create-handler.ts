@@ -9,7 +9,7 @@ import { Monitor } from '../../../shared/helpers/monitor';
 /**
  * Handles discord.js channelCreate event.
  */
-export class ChannelCreateHandler extends Handler<GuildChannel> {
+class ChannelCreateHandler extends Handler<GuildChannel> {
   /**
    * Handles the event.
    */
@@ -37,3 +37,5 @@ export class ChannelCreateHandler extends Handler<GuildChannel> {
     }
   }
 }
+
+export const ChannelCreateHandlerInstance = new ChannelCreateHandler();

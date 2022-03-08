@@ -22,10 +22,7 @@ import {
   Project,
   Role,
 } from './daos';
-import {
-  Monitor,
-  MonitorLayer,
-} from '../../helpers/monitor';
+import { Monitor } from '../../helpers/monitor';
 import { Database } from '../database';
 import { DatabaseUrlMissingError } from '../../errors/database-url-missing';
 import { MESSAGE_DATABASE_CONNECTION_SUCCESS } from '../../config/messages';
@@ -158,7 +155,7 @@ export class MongoDatabase extends Database {
     Monitor.log(
       MongoDatabase,
       MESSAGE_DATABASE_CONNECTION_SUCCESS,
-      MonitorLayer.UPDATE,
+      Monitor.Layer.UPDATE,
     );
   }
 

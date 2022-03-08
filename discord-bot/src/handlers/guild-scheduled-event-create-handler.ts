@@ -24,3 +24,5 @@ export class GuildScheduledEventCreateHandler extends Handler<GuildScheduledEven
     }
   }
 }
+
+export const GuildScheduledEventCreateHandlerInstance = new GuildScheduledEventCreateHandler();

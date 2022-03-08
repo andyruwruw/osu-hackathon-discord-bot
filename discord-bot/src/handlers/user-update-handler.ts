@@ -27,3 +27,5 @@ export class UserUpdateHandler extends Handler<User> {
     }
   }
 }
+
+export const UserUpdateHandlerInstance = new UserUpdateHandler();

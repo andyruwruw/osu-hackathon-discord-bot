@@ -1,6 +1,10 @@
 /**
- * This class helps the Discord bot update its database
- * in the case that the bot is stopped and restarted.
+ * Typically, the Discord bot will listen for any events
+ * that would result in a change in the database.
+ * 
+ * However in the case the Discord bot is stopped,
+ * restarted, or the database wiped, the DataSync class
+ * will update the database with any missed events.
  */
 
 // Packages
@@ -13,10 +17,14 @@ import {
 } from 'discord.js';
 
 // Local Imports
+import {
+  MESSAGE_DATA_SYNCED,
+  MESSAGE_DATA_SYNC_START,
+} from '../config/messages';
 import { Monitor } from '../../../shared/helpers/monitor';
 import { DiscordBot } from '../discord-bot';
 import { getDatabase } from '../../../shared/database';
-import { MESSAGE_DATA_SYNCED } from '../config/messages';
+import { sleep } from './sleep';
 
 // Types
 import {
@@ -35,6 +43,12 @@ export class DataSync {
    */
   static async syncDatabase(client: DiscordBot): Promise<void> {
     try {
+      Monitor.log(
+        DataSync,
+        MESSAGE_DATA_SYNC_START,
+        Monitor.Layer.UPDATE,
+      );
+
       await this._checkGuilds(client);
 
       Monitor.log(
@@ -61,6 +75,7 @@ export class DataSync {
     const databaseGuildIds = (await getDatabase().guild.find()).map((guild: IGuild) => guild.id);
 
     for (let i = 0; i < guilds.length; i += 1) {
+      await sleep(500);
       const guild = guilds[i];
 
       if (!(databaseGuildIds.includes(guild.id))) {
@@ -88,6 +103,7 @@ export class DataSync {
     })).map((channel: IChannel) => channel.id);
 
     for (let i = 0; i < channels.length; i += 1) {
+      await sleep(500);
       const channel = channels[i];
 
       if (!(databaseChannelIds.includes(guild.id))) {
@@ -143,6 +159,8 @@ export class DataSync {
       })).values(),
     ] as OAuth2Guild[];
 
+    await sleep(500);
+
     return await Promise.all(guilds.map(async (guild: OAuth2Guild) => {
       return guild.fetch();
     }));
@@ -159,6 +177,8 @@ export class DataSync {
       ...(await guild.channels.fetch()).values(),
     ];
 
+    await sleep(500);
+
     return await Promise.all(channels.map((async (channel: NonThreadGuildBasedChannel) => {
       return channel.fetch();
     })));
@@ -174,6 +194,8 @@ export class DataSync {
     const members = [
       ...(await guild.members.list()).values(),
     ];
+
+    await sleep(500);
 
     return await Promise.all(members);
   }

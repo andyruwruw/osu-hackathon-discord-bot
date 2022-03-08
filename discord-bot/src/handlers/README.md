@@ -4,6 +4,8 @@ These handlers are built to handle [Discord.js Client events](https://discord.js
 
 Each handler inherits from the [abstract handler class](), giving it access to the Discord.js client and database.
 
+Each class exports an instance, as methods are essentially static, but must be instances to allow inheritance.
+
 Each is essentially a static class with an `execute` method that deals with the event.
 
 The following events are handled:

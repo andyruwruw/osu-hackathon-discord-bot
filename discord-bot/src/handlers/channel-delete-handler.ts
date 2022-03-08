@@ -12,7 +12,7 @@ import { Monitor } from '../../../shared/helpers/monitor';
 /**
  * Handles discord.js channelDelete event.
  */
-export class ChannelDeleteHandler extends Handler<DMChannel | GuildChannel> {
+class ChannelDeleteHandler extends Handler<DMChannel | GuildChannel> {
   /**
    * Handles the event.
    */
@@ -41,3 +41,5 @@ export class ChannelDeleteHandler extends Handler<DMChannel | GuildChannel> {
     }
   }
 }
+
+export const ChannelDeleteHandlerInstance = new ChannelDeleteHandler();

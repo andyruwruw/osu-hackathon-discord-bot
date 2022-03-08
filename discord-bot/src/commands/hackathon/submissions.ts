@@ -13,10 +13,10 @@ import {
 } from '../../config';
 import { Command } from '../command';
 import { getDatabase } from '../../../../shared/database';
+import { Monitor } from '../../../../shared/helpers/monitor';
 
 // Types
 import { IHackathon } from '../../../../shared/types';
-import { Monitor, MonitorLayer } from '../../../../shared/helpers/monitor';
 
 const OPTIONS = [
   {
@@ -62,7 +62,7 @@ export class HackathonSubmissionsCommand extends Command {
       Monitor.log(
         HackathonSubmissionsCommand,
         error,
-        MonitorLayer.WARNING,
+        Monitor.Layer.WARNING,
       );
     }
     return false;

@@ -35,3 +35,5 @@ export class GuildBanAddHandler extends Handler<GuildBan> {
     }
   }
 }
+
+export const GuildBanAddHandlerInstance = new GuildBanAddHandler();

@@ -30,3 +30,5 @@ export class GuildScheduledEventUserRemoveHandler extends Handler<GuildScheduled
     }
   }
 }
+
+export const GuildScheduledEventUserRemoveHandlerInstance = new GuildScheduledEventUserRemoveHandler();

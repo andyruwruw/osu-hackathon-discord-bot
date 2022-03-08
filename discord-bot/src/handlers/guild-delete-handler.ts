@@ -29,3 +29,5 @@ export class GuildDeleteHandler extends Handler<Guild> {
     }
   }
 }
+
+export const GuildDeleteHandlerInstance = new GuildDeleteHandler();

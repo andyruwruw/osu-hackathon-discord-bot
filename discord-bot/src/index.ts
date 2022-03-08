@@ -1,3 +1,7 @@
+/**
+ * Here we start the bot and connect to the database.
+ */
+
 // Local Imports
 import { DISCORD_INTENTS } from './config';
 import { DiscordBot } from './discord-bot';

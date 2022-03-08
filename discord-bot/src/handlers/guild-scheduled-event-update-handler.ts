@@ -27,3 +27,5 @@ export class GuildScheduledEventUpdateHandler extends Handler<GuildScheduledEven
     }
   }
 }
+
+export const GuildScheduledEventUpdateHandlerInstance = new GuildScheduledEventUpdateHandler();

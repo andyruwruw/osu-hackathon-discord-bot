@@ -27,3 +27,5 @@ export class RoleUpdateHandler extends Handler<Role> {
     }
   }
 }
+
+export const RoleUpdateHandlerInstance = new RoleUpdateHandler();

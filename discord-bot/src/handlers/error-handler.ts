@@ -25,3 +25,5 @@ export class ErrorHandler extends Handler<Error> {
     }
   }
 }
+
+export const ErrorHandlerInstance = new ErrorHandler();

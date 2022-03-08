@@ -16,10 +16,7 @@ import {
   ProjectParticipation,
   Role,
 } from './daos';
-import {
-  Monitor,
-  MonitorLayer,
-} from '../../helpers/monitor';
+import { Monitor } from '../../helpers/monitor';
 import { Database } from '../database';
 import { MESSAGE_DATABASE_CACHE_CONNECTION_SUCCESS } from '../../config/messages';
 
@@ -133,7 +130,7 @@ export class CacheDatabase extends Database {
     Monitor.log(
       CacheDatabase,
       MESSAGE_DATABASE_CACHE_CONNECTION_SUCCESS,
-      MonitorLayer.WARNING,
+      Monitor.Layer.WARNING,
     );
   }
 

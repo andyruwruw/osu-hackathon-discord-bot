@@ -30,3 +30,5 @@ export class MessageReactionAddHandler extends Handler<MessageReaction | User> {
     }
   }
 }
+
+export const MessageReactionAddHandlerInstance = new MessageReactionAddHandler();

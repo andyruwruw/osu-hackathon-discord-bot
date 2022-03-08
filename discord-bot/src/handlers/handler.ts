@@ -1,3 +1,12 @@
+/**
+ * The Handler class is abstract and defines methods
+ * used by all handlers, namely holding references
+ * to the database and discord.js client.
+ * 
+ * Use of this class is limited to concrete commands
+ * inheriting from this class.
+ */
+
 // Local Imports
 import { Database } from '../../../shared/database/database';
 import { DiscordBot } from '../discord-bot';

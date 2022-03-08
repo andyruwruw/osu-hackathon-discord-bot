@@ -47,3 +47,5 @@ export class GuildMemberRemoveHandler extends Handler<GuildMember | PartialGuild
     }
   }
 }
+
+export const GuildMemberRemoveHandlerInstance = new GuildMemberRemoveHandler();

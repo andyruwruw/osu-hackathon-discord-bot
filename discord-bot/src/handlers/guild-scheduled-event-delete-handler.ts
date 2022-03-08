@@ -24,3 +24,5 @@ export class GuildScheduledEventDeleteHandler extends Handler<GuildScheduledEven
     }
   }
 }
+
+export const GuildScheduledEventDeleteHandlerInstance = new GuildScheduledEventDeleteHandler();

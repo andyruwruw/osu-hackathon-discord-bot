@@ -1,3 +1,13 @@
+/**
+ * The Command class is abstract and defines methods
+ * used by all commands, namely converting a concrete
+ * implementation into a JSON object that Discord
+ * recognizes as a command.
+ * 
+ * Use of this class is limited to concrete commands
+ * inheriting from this class.
+ */
+
 // Packages
 import {
   ApplicationCommandData,

@@ -32,3 +32,5 @@ export class GuildCreateHandler extends Handler<Guild> {
     }
   }
 }
+
+export const GuildCreateHandlerInstance = new GuildCreateHandler();

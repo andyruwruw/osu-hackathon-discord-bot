@@ -42,3 +42,5 @@ export class GuildMemberUpdateHandler extends Handler<GuildMember> {
     }
   }
 }
+
+export const GuildMemberUpdateHandlerInstance = new GuildMemberUpdateHandler();

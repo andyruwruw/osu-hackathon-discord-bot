@@ -25,3 +25,5 @@ export class MessageCreateHandler extends Handler<Message> {
     }
   }
 }
+
+export const MessageCreateHandlerInstance = new MessageCreateHandler();

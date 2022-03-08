@@ -29,3 +29,5 @@ export class InteractionCreateHandler extends Handler<Interaction> {
     }
   }
 }
+
+export const InteractionCreateHandlerInstance = new InteractionCreateHandler();

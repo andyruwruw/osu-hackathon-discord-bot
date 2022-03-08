@@ -2,9 +2,14 @@
 import { Client } from 'discord.js';
 
 // Local Imports
+import {
+  MESSAGE_READY,
+  MESSAGE_INVITE_LINK,
+} from '../config/messages';
 import { CommandManager } from '../commands';
+import { Environment } from '../helpers/environment';
+import { INVITE_LINK } from '../config';
 import { Handler } from './handler';
-import { MESSAGE_READY } from '../config/messages';
 import { Monitor } from '../../../shared/helpers/monitor';
 
 /**
@@ -21,6 +26,12 @@ export class ReadyHandler extends Handler<Client> {
         MESSAGE_READY,
         Monitor.Layer.UPDATE,
       );
+
+      Monitor.log(
+        ReadyHandler,
+        MESSAGE_INVITE_LINK(INVITE_LINK(Environment.getDiscordApplicationId())),
+        Monitor.Layer.UPDATE,
+      );
   
       // Register slash commands.
       CommandManager.instantiateCommands();
@@ -34,3 +45,5 @@ export class ReadyHandler extends Handler<Client> {
     }
   }
 }
+
+export const ReadyHandlerInstance = new ReadyHandler();

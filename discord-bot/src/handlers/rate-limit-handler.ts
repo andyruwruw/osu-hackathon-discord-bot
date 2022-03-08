@@ -29,3 +29,5 @@ export class RateLimitHandler extends Handler<RateLimitData> {
     }
   }
 }
+
+export const RateLimitHandlerInstance = new RateLimitHandler();

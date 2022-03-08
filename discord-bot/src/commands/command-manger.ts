@@ -1,3 +1,11 @@
+/**
+ * The CommandManager ensures commands are properly registered
+ * and updated, as well as routing incoming interactions to 
+ * the correct commands for handling.
+ * 
+ * It's the main facade to all commands. 
+ */
+
 // Packages
 import {
   Guild,
@@ -8,14 +16,15 @@ import {
 
 // Local Import
 import {
-  getApplicationRegisteredCommandsAsHashmap,
-  getClientGuilds,
-  getGuildRegisteredCommandsAsHashmap,
-} from '../helpers/discord-data';
+  MESSAGE_COMMANDS_REGISTERED,
+  MESSAGE_COMMANDS_REGISTER_START,
+  MESSAGE_COMMANDS_UPDATE,
+} from '../config/messages';
 import { APPLICATION_COMMAND_TYPES } from '../config';
 import { Command } from './command';
 import { DiscordBot } from '../discord-bot';
-import { MESSAGE_COMMANDS_REGISTERED } from '../config/messages';
+import { getApplicationRegisteredCommandsAsHashmap } from '../helpers/discord-data';
+import { sleep } from '../helpers/sleep';
 
 // Commands
 import {
@@ -30,6 +39,9 @@ import { Monitor } from '../../../shared/helpers/monitor';
  * Manages all commands and routes interactions to correct command.
  */
 export class CommandManager {
+  /**
+   * Static list of commands to be registered.
+   */
   static _commands: Command[] = [];
 
   /**
@@ -50,8 +62,16 @@ export class CommandManager {
    *
    * @param {Interaction} interaction Interaction to check.
    */
-  static handleInteraction(interaction: Interaction): void {
-    console.log('interaction', interaction);
+  static async handleInteraction(interaction: Interaction): Promise<void> {
+    if (!interaction.isCommand()) {
+      return;
+    }
+
+    console.log(interaction.command);
+    console.log(interaction.commandId);
+    console.log(interaction.commandName);
+
+    interaction.reply('interaction reply');
   }
 
   /**
@@ -70,19 +90,19 @@ export class CommandManager {
    */
   static async registerCommands(client: DiscordBot): Promise<void> {
     try {
+      Monitor.log(
+        CommandManager,
+        MESSAGE_COMMANDS_REGISTER_START,
+        Monitor.Layer.UPDATE,
+      );
+
       const applicationCommands = await getApplicationRegisteredCommandsAsHashmap(client);
-      const guilds = await getClientGuilds(client);
-      const guildCommands = [] as Record<string, ApplicationCommand>[];
-  
-      for (let i = 0; i < guilds.length; i += 1) {
-        const guild = guilds[i];
-  
-        guildCommands.push(await getGuildRegisteredCommandsAsHashmap(guild));
-      }
   
       for (let i = 0; i < CommandManager._commands.length; i += 1) {
-        let shouldCreateApplication = true;
+        await sleep(500);
+
         const command = CommandManager._commands[i];
+        let shouldCreateApplication = true;
   
         if (command.getKey() in applicationCommands) {
           if (CommandManager._applicationCommandMatches(
@@ -91,34 +111,17 @@ export class CommandManager {
           )) {
             shouldCreateApplication = false;
           } else {
+            Monitor.log(
+              CommandManager,
+              MESSAGE_COMMANDS_UPDATE(applicationCommands[command.getKey()].id),
+              Monitor.Layer.DEBUG,
+            );
             await client.application.commands.delete(applicationCommands[command.getKey()].id);
           }
         }
   
         if (shouldCreateApplication) {
           await client.application.commands.create(command.createRegistration());
-        }
-  
-        for (let j = 0; j < guilds.length; j += 1) {
-          const guild = guilds[j];
-          const commands = guildCommands[j];
-  
-          let shouldCreateGuild = true;
-  
-          if (command.getKey() in commands) {
-            if (CommandManager._applicationCommandMatches(
-              commands[command.getKey()],
-              command,
-            )) {
-              shouldCreateGuild = false;
-            } else {
-              await guild.commands.delete(commands[command.getKey()].id);
-            }
-          }
-  
-          if (shouldCreateGuild) {
-            await guild.commands.create(command.createRegistration());
-          }
         }
       }
 
@@ -152,12 +155,7 @@ export class CommandManager {
     }
 
     return applicationCommand.name === command.getKey()
-      && applicationCommand.description === command.getDescription()
-      && (
-        (applicationCommand.type === 'CHAT_INPUT' && command.getType() === APPLICATION_COMMAND_TYPES.CHAT_INPUT)
-        || (applicationCommand.type === 'USER' && command.getType() === APPLICATION_COMMAND_TYPES.USER)
-        || (applicationCommand.type === 'MESSAGE' && command.getType() === APPLICATION_COMMAND_TYPES.MESSAGE)
-      );
+      && applicationCommand.description === command.getDescription();
   }
 
   /**

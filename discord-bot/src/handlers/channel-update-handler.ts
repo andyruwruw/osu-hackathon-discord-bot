@@ -50,3 +50,5 @@ export class ChannelUpdateHandler extends Handler<DMChannel | GuildChannel> {
     }
   }
 }
+
+export const ChannelUpdateHandlerInstance = new ChannelUpdateHandler();

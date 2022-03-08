@@ -7,9 +7,9 @@ import { MESSAGE_ROLE_ASSIGNMENT_EMOJI_DELETED } from '../config/messages';
 import { Monitor } from '../../../shared/helpers/monitor';
 
 /**
- * Handles discord.js emojiDelete event.
+ * Handles discord.js emojiCreate event.
  */
-export class EmojiDeleteHandler extends Handler<GuildEmoji> {
+export class EmojiCreateHandler extends Handler<GuildEmoji> {
   /**
    * Handles the event.
    */
@@ -21,24 +21,14 @@ export class EmojiDeleteHandler extends Handler<GuildEmoji> {
 
       if (existing.length > 0) {
         Monitor.log(
-          EmojiDeleteHandler,
+          EmojiCreateHandler,
           MESSAGE_ROLE_ASSIGNMENT_EMOJI_DELETED,
           Monitor.Layer.WARNING,
         );
-
-        for (let i = 0; i < existing.length; i += 1) {
-          const messageRoleAssignment = existing[i];
-
-          await Handler._database.messageRoleAssignment.delete({
-            message: messageRoleAssignment.message,
-            emoji: messageRoleAssignment.emoji,
-            role: messageRoleAssignment.role,
-          });
-        }
       }
     } catch (error) {
       Monitor.log(
-        EmojiDeleteHandler,
+        EmojiCreateHandler,
         error,
         Monitor.Layer.WARNING,
       );
@@ -46,4 +36,4 @@ export class EmojiDeleteHandler extends Handler<GuildEmoji> {
   }
 }
 
-export const EmojiDeleteHandlerInstance = new EmojiDeleteHandler();
+export const EmojiCreateHandlerInstance = new EmojiCreateHandler();

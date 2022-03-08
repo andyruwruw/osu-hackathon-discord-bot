@@ -24,3 +24,5 @@ export class RoleCreateHandler extends Handler<Role> {
     }
   }
 }
+
+export const RoleCreateHandlerInstance = new RoleCreateHandler();

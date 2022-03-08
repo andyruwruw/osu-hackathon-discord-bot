@@ -6,6 +6,14 @@ import {
 } from 'discord.js';
 
 /**
+ * Generates Invite Link
+ *
+ * @param {string} clientId Discord bot Id.
+ * @returns {string} Invite link.
+ */
+ export const INVITE_LINK = (clientId: string) => (`https://discord.com/api/oauth2/authorize?client_id=${clientId}&permissions=1644972469495&scope=bot%20applications.commands`);
+
+/**
  * Discord application command option types.
  */
 export const APPLICATION_COMMAND_OPTION_TYPES = {

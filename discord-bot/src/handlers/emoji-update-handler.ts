@@ -52,3 +52,5 @@ export class EmojiUpdateHandler extends Handler<GuildEmoji> {
     }
   }
 }
+
+export const EmojiUpdateHandlerInstance = new EmojiUpdateHandler();

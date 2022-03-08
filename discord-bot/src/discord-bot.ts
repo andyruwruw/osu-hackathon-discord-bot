@@ -2,7 +2,12 @@
  * This is the main discord.js bot client class
  * that maintains the connection with Discord.
  * 
- * Events are possed to handlers.
+ * Events are passed to handlers as to avoid this
+ * class becoming any larger than it already is.
+ * 
+ * You'll only really need to touch this class if
+ * you're adding a new event listener or changing
+ * existing event listeners.
  */
 
 // Packages
