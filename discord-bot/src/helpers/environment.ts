@@ -94,6 +94,6 @@ export class Environment {
    * @returns {string} Discord application Id.
    */
    static getDiscordApplicationId(): string {
-    return process.env.DISCORD_APPLICATION_ID;
+    return process.env.DISCORD_APPLICATION_ID || '';
   }
 }
