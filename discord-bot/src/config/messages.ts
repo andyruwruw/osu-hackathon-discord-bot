@@ -35,6 +35,11 @@ export const MESSAGE_DATA_SYNCED = 'Database synced with Discord.';
 export const MESSAGE_DATA_SYNC_START = 'Syncing database with Discord.';
 
 /**
+ * Error message for using abstract command.
+ */
+ export const MESSAGE_USED_ABSTRACT_COMMAND_ERROR = 'Attempted to use Abstract Command, use a concrete implementation instead.';
+
+/**
  * Error message for using abstract handler.
  */
 export const MESSAGE_USED_ABSTRACT_HANDLER_ERROR = 'Attempted to use Abstract Handler, use a concrete implementation instead.';

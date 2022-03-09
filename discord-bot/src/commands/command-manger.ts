@@ -67,11 +67,14 @@ export class CommandManager {
       return;
     }
 
-    console.log(interaction.command);
-    console.log(interaction.commandId);
-    console.log(interaction.commandName);
+    for (let i = 0; i < CommandManager._commands.length; i += 1) {
+      const command = CommandManager._commands[i];
 
-    interaction.reply('interaction reply');
+      if (command.getKey() === interaction.commandName) {
+        await command.execute(interaction);
+        return;
+      }
+    }
   }
 
   /**
@@ -121,7 +124,7 @@ export class CommandManager {
         }
   
         if (shouldCreateApplication) {
-          await client.application.commands.create(command.createRegistration());
+          await client.application.commands.create(command.create());
         }
       }
 

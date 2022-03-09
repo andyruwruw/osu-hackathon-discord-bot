@@ -1,5 +1,6 @@
 // Local Imports
 import { APPLICATION_COMMAND_TYPES } from '../../config';
+import { HelpResponse } from '../../responses/help-response';
 import { Command } from '../command';
 
 /**

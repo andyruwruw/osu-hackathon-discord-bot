@@ -33,6 +33,8 @@ import {
 export class Response {
   /**
    * Creates response object.
+   * 
+   * @returns {Promise<MessageOptions | InteractionReplyOptions>} JSON of message object.
    */
   async create(): Promise<MessageOptions | InteractionReplyOptions> {
     const pending = [

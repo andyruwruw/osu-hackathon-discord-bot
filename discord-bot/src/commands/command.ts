@@ -13,6 +13,7 @@ import {
   ApplicationCommandData,
   ApplicationCommandOptionData,
   Guild,
+  Interaction,
 } from 'discord.js';
 
 /**
@@ -98,7 +99,7 @@ export class Command {
    *
    * @returns {ApplicationCommandData} Discord accepted object for command.
    */
-  createRegistration(): ApplicationCommandData {
+  create(): ApplicationCommandData {
     return {
       name: typeof(this._key) === 'string' ? this._key : this._key[0],
       description: this._description,
@@ -106,11 +107,25 @@ export class Command {
       defaultPermission: !this._restricted,
       options: [
         ...this._options,
-        ...this._subCommands.map((command) => command.createRegistration()) as ApplicationCommandOptionData[],
+        ...this._subCommands.map((command) => command.create()) as ApplicationCommandOptionData[],
       ],
     };
   }
+  
+  /**
+   * Executes the command.
+   *
+   * @param {Interaction} interaction Interaction to execute the command on.
+   */
+  async execute(interaction: Interaction): Promise<void> {
+  }
 
+  /**
+   * Updates choices for the Command.
+   *
+   * @param {Guild} guild Guild to update choices for.
+   * @returns {Promise<boolean>} Whether the choices were updated.
+   */
   async updateChoices(guild: Guild): Promise<boolean> {
     if (!this.hasChoices()) {
       return false;
