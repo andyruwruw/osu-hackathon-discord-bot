@@ -110,19 +110,19 @@ export class Embed {
    */
   async _getColor(): Promise<number[]> {
     return [
-      0,
-      0,
-      0,
+      205,
+      135,
+      55,
     ];
   }
 
   /**
    * Retrieves the embeds fields.
    *
-   * @returns {Promise<EmbedFieldData>} Embed fields.
+   * @returns {Promise<EmbedFieldData[]>} Embed fields.
    */
-  async _getFields(): Promise<EmbedFieldData> {
-    return null;
+  async _getFields(): Promise<EmbedFieldData[]> {
+    return [];
   }
 
   /**

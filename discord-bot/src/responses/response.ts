@@ -24,7 +24,6 @@ import {
   MessageActionRowOptions,
   MessageAttachment,
   MessageEmbed,
-  MessageOptions,
 } from 'discord.js';
 
 /**
@@ -34,9 +33,9 @@ export class Response {
   /**
    * Creates response object.
    * 
-   * @returns {Promise<MessageOptions | InteractionReplyOptions>} JSON of message object.
+   * @returns {Promise<InteractionReplyOptions>} JSON of message object.
    */
-  async create(): Promise<MessageOptions | InteractionReplyOptions> {
+  async create(): Promise<InteractionReplyOptions> {
     const pending = [
       this._getContent(),
       this._getEmbeds(),
@@ -53,6 +52,8 @@ export class Response {
       attatchements,
     ] = await Promise.all(pending);
 
+    console.log(embeds);
+
     return {
       content: content as string,
       embeds: embeds as MessageEmbed[],
@@ -68,7 +69,7 @@ export class Response {
    * @returns {Promise<string>} Message content.
    */
   async _getContent(): Promise<string> {
-    return '';
+    return ' ';
   }
 
   /**

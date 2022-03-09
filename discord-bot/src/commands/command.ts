@@ -12,9 +12,11 @@
 import {
   ApplicationCommandData,
   ApplicationCommandOptionData,
+  CommandInteraction,
   Guild,
   Interaction,
 } from 'discord.js';
+import { UsedAbstractCommandError } from '../errors/used-abstract-command-error';
 
 /**
  * Abstract Command class, only implement inherited classes.
@@ -115,9 +117,10 @@ export class Command {
   /**
    * Executes the command.
    *
-   * @param {Interaction} interaction Interaction to execute the command on.
+   * @param {CommandInteraction} interaction Interaction to execute the command on.
    */
-  async execute(interaction: Interaction): Promise<void> {
+  async execute(interaction: CommandInteraction): Promise<void> {
+    throw new UsedAbstractCommandError();
   }
 
   /**
@@ -160,6 +163,33 @@ export class Command {
   }
 
   /**
+   * Whether this command has sub commands.
+   *
+   * @returns {boolean} Whether this command has sub commands.
+   */
+  hasSubcommands() {
+    return this._subCommands.length > 0;
+  }
+
+  /**
+   * Retrieves a Command's options.
+   *
+   * @returns {ApplicationCommandOptionData[]} Options of the Command.
+   */
+  getOptions(): ApplicationCommandOptionData[] {
+    return this._options;
+  }
+
+  /**
+   * Retrieves a commands set of subcommands.
+   *
+   * @returns {Command[]} Subcommands of the Command.
+   */
+  getSubcommands() {
+    return this._subCommands;
+  }
+
+  /**
    * Whether this command has additional options.
    *
    * @returns {boolean} Whether this command has additional options.
@@ -198,6 +228,15 @@ export class Command {
    */
   getKey(): string {
     return this._key;
+  }
+
+  /**
+   * Retrieves the Command's name.
+   *
+   * @returns {string} Name of the Command.
+   */
+  getName(): string {
+    return this._name;
   }
 
   /**

@@ -4,6 +4,7 @@ import { Command } from '../command';
 import { HackathonSeeNextCommand } from './see-next';
 import { HackathonViewCommand } from './view';
 import { HackathonSubmissionsCommand } from './submissions';
+import { CommandInteraction } from 'discord.js';
 
 /**
  * Subcommands of this command.
@@ -31,5 +32,14 @@ export class HackathonCommand extends Command {
       [],
       SUBCOMMANDS,
     );
+  }
+
+  /**
+   * Executes the command.
+   *
+   * @param {CommandInteraction} interaction Interaction to execute the command on.
+   */
+  async execute(interaction: CommandInteraction): Promise<void> {
+    
   }
 }

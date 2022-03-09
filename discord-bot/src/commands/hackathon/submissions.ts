@@ -4,6 +4,7 @@ import {
   ApplicationCommandOptionChoice,
   ApplicationCommandOptionData,
   Guild,
+  CommandInteraction,
 } from 'discord.js';
 
 // Local Imports
@@ -66,5 +67,14 @@ export class HackathonSubmissionsCommand extends Command {
       );
     }
     return false;
+  }
+
+  /**
+   * Executes the command.
+   *
+   * @param {CommandInteraction} interaction Interaction to execute the command on.
+   */
+  async execute(interaction: CommandInteraction): Promise<void> {
+    
   }
 }

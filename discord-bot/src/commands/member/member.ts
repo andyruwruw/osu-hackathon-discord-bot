@@ -1,5 +1,8 @@
 // Packages
-import { ApplicationCommandOptionData } from 'discord.js';
+import {
+  ApplicationCommandOptionData,
+  CommandInteraction,
+} from 'discord.js';
 
 // Local Imports
 import { Command } from '../command';
@@ -33,5 +36,14 @@ export class MemberCommand extends Command {
       false,
       OPTIONS,
     );
+  }
+
+  /**
+   * Executes the command.
+   *
+   * @param {CommandInteraction} interaction Interaction to execute the command on.
+   */
+  async execute(interaction: CommandInteraction): Promise<void> {
+    
   }
 }

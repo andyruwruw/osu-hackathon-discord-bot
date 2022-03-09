@@ -1,4 +1,5 @@
 // Local Imports
+import { CommandInteraction } from 'discord.js';
 import { APPLICATION_COMMAND_TYPES } from '../../config';
 import { Command } from '../command';
 
@@ -16,5 +17,14 @@ export class TeammateCommand extends Command {
       'Helps you find a teammate!',
       APPLICATION_COMMAND_TYPES.CHAT_INPUT,
     );
+  }
+
+  /**
+   * Executes the command.
+   *
+   * @param {CommandInteraction} interaction Interaction to execute the command on.
+   */
+  async execute(interaction: CommandInteraction): Promise<void> {
+    
   }
 }

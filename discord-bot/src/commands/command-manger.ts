@@ -12,6 +12,7 @@ import {
   Interaction,
   Message,
   ApplicationCommand,
+  CommandInteraction,
 } from 'discord.js';
 
 // Local Import
@@ -71,7 +72,7 @@ export class CommandManager {
       const command = CommandManager._commands[i];
 
       if (command.getKey() === interaction.commandName) {
-        await command.execute(interaction);
+        await command.execute(interaction as CommandInteraction);
         return;
       }
     }
@@ -83,7 +84,6 @@ export class CommandManager {
    * @param {Message} message The message to check.
    */
   static handleMessage(message: Message): void {
-    console.log(message);
   }
 
   /**
