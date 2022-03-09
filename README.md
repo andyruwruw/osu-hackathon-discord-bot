@@ -1,64 +1,135 @@
 # Oregon State Hackathon Club Discord Bot
 
+```
+This repository is still in development!
+```
+
+If anyone is interesting in helping create this bot, see the [Development Guide](./documentation/DEVELOPMENT.md).
+
 This bot was specifically built for Oregon State Hackathon Club's Discord server. It allows members to easily answer questions, manages participation and engagement, and helps officers maintain the Discord server.
 
 # Table of Contents
 
 - [Features](#features)
-- [Commands](#commands)
-- [Usage](#usage)
+- [Command List](#command-list)
+  - [General Commands](#member-commands)
+  - [Admin Commands](#admin-commands)
+    - [Set Admin Command Channel](#set-admin-command-channel)
+    - [Set Announcements Channel](#set-announcements-channel)
+    - [Set General Command Channel](#set-general-command-channel)
+    - [Set Welcome Channel](#set-welcome-channel)
 
 # Features
 
 - Commands for frequently asked questions.
-- Event management.
-- Engagement leveling up.
-- Dynamic roles for participation.
+- Custom member profiles.
+- Hackathon and project details.
+- Custom roles for participation.
+- Channel management for events.
+- Optional censoring of offensive messages.
 
-# Commands
+# Command List
 
-# Usage
+Commands are split into two categories, general commands and admin commands.
 
-Install dependencies:
+Admin commands are only accessable to officers and should make managing the discord server hassle free!
 
-```
-$ npm install
-```
+Both sets of commands should have designated command channels as to not clutter general threads.
 
-You'll need to create a file named `.env` in the root directory. This file is automatically ignored by git. There's an `example.env` to help you know what properties you'll need. For specific values, contact *Andrew Young*.
+# General Commands
 
-```
-# Discord Registration
-DISCORD_BOT_TOKEN=
+General commands are free to be run by anyone on the server. While most commands will be locked to a designated command channel, some will be enabled for all channels.
 
-# MongoDB Access
-DATABASE_URL=
-DATABASE_USER=
-DATABASE_PASSWORD=
+Commands will be registered with Discord so that any user that types `/` will be given a full list of available commands.
 
-# Enable or disable message types
-DEBUG=1
-WARNING=1
-UPDATE=1
-```
-
-Start the bot with the following command:
+## See Next Hackathon
 
 ```
-$ npm run start
+/hackathon next
 ```
 
-`npm run start` automatically builds the server from typescript to javascript and runs it using `nodemon`, which will restart the server if any changes are saved.
-
-It's best to keep up with linting to ensure the code stays clean. You can run:
+## View an Old Hackathon's Details
 
 ```
-$ npm run lint
-
-or
-
-$ npm run lint:fix
+/hackathon archive
 ```
 
-This will show you all the linting errors to be fixed. All pull requests and pushes to main will be checked for linting and tests by Github as well.
+## Get My Details
 
+```
+/me
+```
+
+## Get a Member's Details
+
+```
+/member @name
+```
+
+# Admin Commands
+
+Admin commands are meant only for officers. The first command run should be setting informing the bot which role is the officer role.
+
+These commands are not registered with Discord, and require this documentation. There's no particular way to hide register commands from some users, so this prevents the command list for general users getting cluttered.
+
+These commands will be locked to a designated admin command channel, which should be assigned as soon as possible.
+
+## Set Officer Role
+
+```
+/admin set-officer-role @role
+```
+
+## Set Admin Command Channel
+
+```
+/admin set-admin-command-channel #channel-name
+```
+
+## Set Announcements Channel
+
+```
+/admin set-announcements-channel #channel-name
+```
+
+## Set General Command Channel
+
+```
+/admin set-command-channel #channel-name
+```
+
+## Set Welcome Channel
+
+```
+/admin set-welcome-channel #channel-name
+```
+
+## Create Hackathon
+
+```
+/admin hackathon create
+```
+
+## Edit Hackathon
+
+```
+/admin hackathon edit
+```
+
+## Generate Hackathon Channels
+
+```
+/admin hackathon generate-channels
+```
+
+## Announce Hackathon
+
+```
+/admin hackathon announce
+```
+
+## Create Role Assigner
+
+```
+/admin role-assigner #channel
+```

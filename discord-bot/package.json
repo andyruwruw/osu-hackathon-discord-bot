@@ -1,0 +1,50 @@
+{
+  "name": "osu-hackathon-discord-bot",
+  "version": "1.0.0",
+  "description": "Custom Discord bot for Oregon State University's hackathon club.",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "start": "nodemon --config nodemon.json src/index.ts",
+    "clean": "rimraf ./dist && echo 'All clean now!'",
+    "test": "jest --colors",
+    "test:verbose": "jest --verbose --colors",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyruwruw/osu-hackathon-discord-bot.git"
+  },
+  "keywords": [
+    "discord-bot",
+    "osu",
+    "hackathon"
+  ],
+  "author": "Andrew Young",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andyruwruw/osu-hackathon-discord-bot/issues"
+  },
+  "homepage": "https://github.com/andyruwruw/osu-hackathon-discord-bot#readme",
+  "dependencies": {
+    "@2toad/profanity": "^1.3.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.2.0",
+    "mongoose": "^6.1.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
