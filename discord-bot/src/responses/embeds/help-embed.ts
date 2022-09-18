@@ -78,8 +78,6 @@ export class HelpEmbed extends Embed {
       })
     }
 
-    console.log(fields);
-
     return fields;
   }
 }

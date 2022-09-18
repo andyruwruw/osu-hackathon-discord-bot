@@ -52,8 +52,6 @@ export class Response {
       attatchements,
     ] = await Promise.all(pending);
 
-    console.log(embeds);
-
     return {
       content: content as string,
       embeds: embeds as MessageEmbed[],
